@@ -1,0 +1,41 @@
+buildscript {
+	ext {
+		springBootVersion = '1.0.2.RELEASE'
+	}
+    repositories {
+    	//mavenCentral()
+    	mavenLocal()
+    	maven { url "http://maven.oschina.net/content/groups/public/"}
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'spring-boot'
+
+jar {
+    baseName = 'radius'
+    version =  '0.0.1-SNAPSHOT'
+}
+
+repositories {
+    //mavenCentral()
+    mavenLocal()
+    maven { url "http://maven.oschina.net/content/groups/public/" }
+}
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}")
+    compile("org.springframework.boot:spring-boot-starter-aop:${springBootVersion}")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}")
+    compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+    compile("mysql:mysql-connector-java:5.1.25")
+    testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.12'
+}

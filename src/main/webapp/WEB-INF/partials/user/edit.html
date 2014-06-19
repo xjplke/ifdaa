@@ -1,0 +1,43 @@
+<section data-ng-controller="PusersController" data-ng-init="findOne()">
+	<form class="form-horizontal" data-ng-submit="update()" autocomplete="off">
+		<div class="control-group">
+			<label class="control-label" for="account">Account</label>
+
+			<div class="controls">
+				<input type="text" data-ng-model="puser.account" id="account" placeholder="Account" required>
+				</input>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="password">Password</label>
+
+			<div class="controls">
+				<input type="password" data-ng-model="puser.password" id="password" cols="30" rows="10" required></input>
+				</textarea>
+			</div>
+		</div>
+<!--
+		<div class="control-group">
+			<label class="control-label" for="password">Confirm your password</label>
+
+			<div class="controls">
+				<input type="password" data-ng-model="puser.password" id="password" cols="30" rows="10"></input>
+				</textarea>
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label" for="email">Email</label>
+			<div class="controls">
+				<input type="text" data-ng-model="puser.email" id="email" cols="30" rows="10" placeholder="Email" required></input>
+				</textarea>
+			</div>
+		</div>		
+-->		
+		<div class="control-group">
+			<div class="controls">
+				<input type="submit" class="btn">
+			</div>
+		</div>
+	</form>
+</section>

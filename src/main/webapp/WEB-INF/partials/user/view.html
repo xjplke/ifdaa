@@ -1,0 +1,13 @@
+<section data-ng-controller="PusersController" data-ng-init="findOne()">
+    <span>{{puser.updatedAt | date:'medium'}}</span>
+    <h2>{{puser.account}}</h2>
+    <div>
+        <a class="btn" href="/#!/pusers/{{puser.id}}/edit">
+        	<i class="icon-edit"></i>
+        </a> 
+        <a class="btn" data-ng-click="remove();">
+            <i class="icon-trash"></i>
+        </a>
+    </div>
+    <div>{{puser.email}}</div>
+</section>
