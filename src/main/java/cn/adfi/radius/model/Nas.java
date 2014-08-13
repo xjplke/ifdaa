@@ -16,7 +16,7 @@ public class Nas implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(unique=true, nullable=false)
-	private int id;
+	private Long id;
 
 	@Column(length=50)
 	private String community;
@@ -32,7 +32,7 @@ public class Nas implements Serializable {
 	@Column(nullable=false, length=60)
 	private String secret;
 
-	@Column(length=64)
+	@Column(nullable=false,length=64)
 	private String server;
 
 	@Column(length=32)
@@ -44,11 +44,11 @@ public class Nas implements Serializable {
 	public Nas() {
 	}
 
-	public int getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

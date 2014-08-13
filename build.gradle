@@ -3,9 +3,9 @@ buildscript {
 		springBootVersion = '1.0.2.RELEASE'
 	}
     repositories {
-    	//mavenCentral()
     	mavenLocal()
-    	maven { url "http://maven.oschina.net/content/groups/public/"}
+    	mavenCentral()
+    	//maven { url "http://maven.oschina.net/content/groups/public/"}
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -22,9 +22,9 @@ jar {
 }
 
 repositories {
-    //mavenCentral()
     mavenLocal()
-    maven { url "http://maven.oschina.net/content/groups/public/" }
+    mavenCentral()
+    //maven { url "http://maven.oschina.net/content/groups/public/" }
 }
 
 dependencies {
@@ -33,6 +33,10 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}")
     compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
     compile("mysql:mysql-connector-java:5.1.25")
+    
+    //compile("org.jvnet.ws.wadl:wadl-core:1.1.6")
+    //compile("org.jvnet.ws.wadl:wadl-client-plugin:1.1.6")
+    //compile("postgresql:postgresql:9.1-901.jdbc4")
     testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
 }
 

@@ -20,7 +20,9 @@ management:
 spring:
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/radiusx
+#    driverClassName: org.postgresql.Driver
+    url: jdbc:mysql://localhost:3306/radius
+#    url: jdbc:postgresql://localhost/radius
     username: root
     password: 123qwe
   jpa:

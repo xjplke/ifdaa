@@ -7,11 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.adfi.radius.model.Nas;
@@ -32,11 +37,20 @@ public class NasController {
 	@Autowired
 	NasRepository nasRepository;
 	
-	public Nas addNas(Nas nas){
+	@RequestMapping(method=RequestMethod.POST)
+	public Nas addNas(@RequestBody Nas nas){
 		return nasRepository.save(nas);
 	}
 	
-	public Nas getNas(Long id) throws NasNotFoundException {
+	@RequestMapping(method=RequestMethod.GET)
+	public Page<Nas> getNas(@RequestParam("page")int page,
+			@RequestParam("size") int size) {
+		Pageable pageable = new PageRequest(page, size, Direction.DESC, "id");
+		return nasRepository.findAll(pageable);
+	}
+	
+	@RequestMapping(value="/{id}",method=RequestMethod.GET)
+	public Nas getNas(@PathVariable("id") Long id) throws NasNotFoundException {
 		Nas find = nasRepository.findOne(id);
 		if(null == find){
 			throw new NasNotFoundException("Nas not find for id:"+id);
@@ -44,7 +58,8 @@ public class NasController {
 		return find;
 	}
 	
-	public Nas updateNas(Long id,Nas nas) throws NasNotFoundException {
+	@RequestMapping(value="/{id}",method=RequestMethod.PUT)
+	public Nas updateNas(@PathVariable("id") Long id,@RequestBody Nas nas) throws NasNotFoundException {
 		Nas find = nasRepository.findOne(id);
 		if (null == find) {
 			throw new NasNotFoundException("Nas not find for id:"+id);
@@ -61,12 +76,30 @@ public class NasController {
 		return nasRepository.save(nas);
 	}
 	
-	public void deleteNas(Long id) {
+	@RequestMapping(value="/{id}",method=RequestMethod.DELETE)
+	public void deleteNas(@PathVariable("id") Long id) {
 		nasRepository.delete(id);
 	}
 	
-	public Page<Nas> findNasByIp(int page,int size,String ip){
-		return nasRepository.findNasByIp(ip, new PageRequest(page, size, Direction.DESC, "id"));
+	@RequestMapping(value="/server/{key}",method=RequestMethod.GET)
+	public Page<Nas> findNasByServer(@RequestParam("page")int page,
+			@RequestParam("size")int size,
+			@PathVariable("key") String server){
+		return nasRepository.findNasByServer(server, new PageRequest(page, size, Direction.DESC, "id"));
+	}
+	
+	@RequestMapping(value="/type/{key}",method=RequestMethod.GET)
+	public Page<Nas> findNasByType(@RequestParam("page")int page,
+			@RequestParam("size")int size,
+			@PathVariable("key") String type){
+		return nasRepository.findNasByType(type, new PageRequest(page, size, Direction.DESC, "id"));
+	}
+	
+	@RequestMapping(value="/nasname/{key}",method=RequestMethod.GET)
+	public Page<Nas> findNasByNasname(@RequestParam("page")int page,
+			@RequestParam("size")int size,
+			@PathVariable("key") String nasname){
+		return nasRepository.findNasByNasname(nasname, new PageRequest(page, size, Direction.DESC, "id"));
 	}
 	
 	

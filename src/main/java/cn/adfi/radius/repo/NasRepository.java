@@ -16,6 +16,12 @@ import cn.adfi.radius.model.Nas;
  * @date 2014-6-1
  */
 public interface NasRepository extends PagingAndSortingRepository<Nas, Long> {
-	@Query("select a from Nas a where a.server = :ip") 
-	public Page<Nas> findNasByIp(@Param("ip")String ip,Pageable pageable);
+	@Query("select a from Nas a where a.server like :ip%") 
+	public Page<Nas> findNasByServer(@Param("ip")String ip,Pageable pageable);
+	
+	@Query("select a from Nas a where a.nasname like %:nasname%") 
+	public Page<Nas> findNasByNasname(@Param("nasname")String nasname,Pageable pageable);
+	
+	@Query("select a from Nas a where a.type like %:type%") 
+	public Page<Nas> findNasByType(@Param("type")String type,Pageable pageable);
 }
