@@ -8,9 +8,10 @@
        		<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Search By <span class="caret"></span></button>
        		<button type="button" class="btn btn-primary" ng-show="searchby.length > 0" disabled>{{searchby}}</button>
        		<ul class="dropdown-menu" role="menu">
-       				<li><a href="javascript:void(0);" ng-click="searchby = 'account';key='';pageChanged()">account</a></li>
-         			<li><a href="javascript:void(0);" ng-click="searchby = 'username';key='';pageChanged()">username</a></li>
-         			<!-- <li><a href="javascript:void(0);" ng-click="searchby = 'group';key='';pageChanged()">group</a></li> -->
+         			<li><a href="javascript:void(0);" ng-click="searchby = 'ssid';key='';pageChanged()">ssid</a></li>
+         			<li><a href="javascript:void(0);" ng-click="searchby = 'nasid';key='';pageChanged()">nasid</a></li>
+         			<li><a href="javascript:void(0);" ng-click="searchby = 'devtype';key='';pageChanged()">devtype</a></li>
+         			<li><a href="javascript:void(0);" ng-click="searchby = 'os';key='';pageChanged()">os</a></li>
        		</ul>
      		</div><!-- /btn-group -->
      		<input type="text" class="form-control" ng-model="key" ng-change="pageChanged()" />
@@ -20,7 +21,7 @@
      			<button type="button" class="btn btn-primary" ng-click="page.size = 20;page.number=1;pageChanged()">20</button>
      			<button type="button" class="btn btn-primary" ng-click="page.size = 40;page.number=1;pageChanged()">40</button>
      			 -->
-     			<a class="btn btn-primary" href="#/user/new">New <span class="glyphicon glyphicon-plus"></span></a>
+     			<a class="btn btn-primary" href="#/system/redirrule/new">New <span class="glyphicon glyphicon-plus"></span></a>
      		</div>
    	</div><!-- /input-group -->    	
 	
@@ -28,26 +29,26 @@
         <thead>
         <tr>
           <th></th>
-          <th>account</th>
-          <th>username</th>
-          <th>starttime</th>
-          <th>endtime</th>
-          <th>is active</th>
+          <th>ssid</th>
+          <th>nasid</th>
+          <th>type</th>
+          <th>os</th>
+          <th>url</th>
           <th></th>
         </tr>
         </thead>
         
         <tbody>
-        <tr ng-repeat="user in userlist | orderBy:id:reverse">
-          <td>{{user.id}}</td>
-          <td title='{{user.account}}'>{{user.account | shortcut}}</td>
-          <td title='{{user.username}}'>{{user.username | shortcut}}</td>
-          <td title='{{user.starttime | date:"yyyy/MM/dd"}}'>{{user.starttime | date:"yyyy/MM/dd"}}</td>
-          <td title='{{user.expire | date:"yyyy/MM/dd"}}'>{{user.expire | date:"yyyy/MM/dd"}}</td>
-          <td title='{{nas.is_active}}'><a href='javascript:void(0);' ng-click="userFlipActive(user)"><span ng-class="'glyphicon glyphicon-{{user.isActive | booltoicontag}}'"></span></a></td>
+        <tr ng-repeat="rule in rulelist | orderBy:id:reverse">
+          <td>{{rule.id}}</td>
+          <td title='{{rule.ssid}}'>{{rule.ssid | shortcut}}</td>
+          <td title='{{rule.nasid}}'>{{rule.nasid | shortcut}}</td>
+          <td title='{{rule.devtype}}'>{{rule.devtype | shortcut}}</td>
+          <td title='{{rule.os}}'>{{rule.os | shortcut}}</td>
+          <td title='{{rule.url}}'>{{rule.url | shortcut:80}}</td>
           <td>
-            <a href="#/user/edit/{{user.id}}" title='edit'><span class="glyphicon glyphicon-edit"></span></a>
-            <a href="javascript:void(0);" ng-click="destroy(user)"><span class="glyphicon glyphicon-trash"></span></a>
+            <a href="#/system/redirrule/edit/{{rule.id}}" title='edit'><span class="glyphicon glyphicon-edit"></span></a>
+            <a href=" javascript:void(0);" ng-click="destroy(rule)"><span class="glyphicon glyphicon-remove"></span></a>
           </td>
         </tr>
         </tbody>

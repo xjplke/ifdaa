@@ -24,7 +24,8 @@ function NasListCtrl($scope,$location, Restangular) {
 	
 	$scope.destroy = function(nas) {
 		nas.remove().then(function() {
-			$location.path('/nas');
+			//$location.path('/system/nas');
+			$scope.pageChanged();
 		});
 	};
 }
@@ -32,7 +33,7 @@ function NasListCtrl($scope,$location, Restangular) {
 function NasCreateCtrl($scope, $location, Restangular) {
 	$scope.save = function() {
 		Restangular.all('nas').post($scope.nas).then(function() {
-			$location.path('/nas');
+			$location.path('/system/nas');
 		});
 	}
 }
@@ -48,7 +49,7 @@ function NasEditCtrl($scope, $location, Restangular, nas) {
 
   $scope.save = function() {
     $scope.nas.put().then(function() {
-      $location.path('/nas');
+      $location.path('/system/nas');
     });
   };
 }

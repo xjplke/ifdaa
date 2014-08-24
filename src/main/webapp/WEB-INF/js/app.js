@@ -19,6 +19,8 @@ adfiApp.config(['$routeProvider','$httpProvider','RestangularProvider',
     			templateUrl: 'partials/system/nas/list.html',
     			controller: 'NasListCtrl'
     		}).
+    		
+    		
     		when('/system/nas',{
     			templateUrl: 'partials/system/nas/list.html',
     			controller: 'NasListCtrl'
@@ -36,14 +38,52 @@ adfiApp.config(['$routeProvider','$httpProvider','RestangularProvider',
     			templateUrl: 'partials/system/nas/detail.html',
     			controller: 'NasCreateCtrl'
     		}).
-    		//when('/user/list',{
-    		//	templateUrl: 'partials/user/list.html',
-    		//	controller: 'UserController'
-    		//}).
-    		//when('/user/add',{
-    		//	templateUrl: 'partials/user/create.html',
-    		//	controller: 'UserController'
-    		//}).
+    		
+    		
+    		when('/system/redirrule',{
+    			templateUrl: 'partials/system/redirrule/list.html',
+    			controller: 'RedirRuleListCtrl'
+    		}).
+    		when('/system/redirrule/edit/:ruleId',{
+    			templateUrl: 'partials/system/redirrule/detail.html',
+    			controller: 'RedirRuleEditCtrl',
+    			resolve: {
+  		          	rule: function(Restangular, $route){
+  		          		return Restangular.one('redirrule', $route.current.params.ruleId).get();
+  		          	}
+    			}
+    		}).
+    		when('/system/redirrule/new',{
+    			templateUrl: 'partials/system/redirrule/detail.html',
+    			controller: 'RedirRuleCreateCtrl'
+    		}).
+    		
+    		
+    		when('/user',{
+    			templateUrl: 'partials/user/list.html',
+    			controller: 'UserListCtrl'
+    		}).
+    		when('/user/edit/:userId',{
+    			templateUrl: 'partials/user/detail.html',
+    			controller: 'UserEditCtrl',
+    			resolve:{
+    				user:function(Restangular,$route){
+    					return Restangular.one('user',$route.current.params.userId).get();
+    				}
+    			}
+    		}).
+    		when('/user/new',{
+    			templateUrl: 'partials/user/detail.html',
+    			controller: 'UserCreateCtrl'
+    		}).
+    		
+    		
+    		when('/record',{
+    			templateUrl: 'partials/report/list.html',
+    			controller: 'RecordListCtrl'
+    		}).
+    		
+    		
     		otherwise({
     			redirectTo: '/'
     		});
@@ -88,3 +128,58 @@ adfiApp.filter('shortcut',function(){
 		return s;
 	};
 });
+
+adfiApp.filter('booltoicontag',function(){
+	return function(b){
+		if(b==true){
+			return "ok";
+		}
+		return "remove";
+	}
+});
+
+adfiApp.filter('timetodatestr',function(){
+	return function(time){
+		var d = new Date(time);
+		//return d.toLocaleDateString();
+		return d.format("mm-dd-yyyy");
+	}
+})
+
+
+var IPADDR_REGEXP = /^(25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|[1-9])\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)$/;
+adfiApp.directive('ipaddres', function() {
+  return {
+    require: 'ngModel',
+    link: function(scope, elm, attrs, ctrl) {
+      ctrl.$parsers.unshift(function(viewValue) {
+        if (IPADDR_REGEXP.test(viewValue)) {
+          // 验证通过
+          ctrl.$setValidity('ipaddres', true);
+          return viewValue;
+        } else {
+          // 验证不通过 返回 undefined (不会有模型更新)
+          ctrl.$setValidity('ipaddres', false);
+          return undefined;
+        }
+      });
+    }
+  };
+});
+
+adfiApp.directive('ngMatch', ['$parse',function ($parse) {
+    return {
+        require: 'ngModel',
+        link: function (scope, elem, attrs, ctrl) {
+            var firstPassword = $parse(attrs.ngMatch);
+            elem.add(firstPassword).on('keyup', function () {
+                scope.$apply(function () {
+                    // console.info(elem.val() === $(firstPassword).val());
+                    ctrl.$setValidity('match', elem.val() === firstPassword(scope));
+                });
+            });
+        }
+    }
+}]);
+
+

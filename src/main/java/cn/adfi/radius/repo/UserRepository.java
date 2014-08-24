@@ -12,6 +12,10 @@ import cn.adfi.radius.model.User;
 
 public interface UserRepository extends PagingAndSortingRepository<User, Long> {
 	 
-	 @Query("select a from User a where a.account = :account") 
+	 @Query("select a from User a where a.account like %:account%") 
 	 public Page<User> findByAccount(@Param("account")String account,Pageable pageable); 
+	 
+	 @Query("select a from User a where a.username like %:username%") 
+	 public Page<User> findByUsername(@Param("username")String username,Pageable pageable); 
+	 
 }

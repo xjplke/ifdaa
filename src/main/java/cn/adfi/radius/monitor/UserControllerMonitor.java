@@ -3,13 +3,20 @@
  */
 package cn.adfi.radius.monitor;
 
+import java.text.SimpleDateFormat;
+
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.JoinPoint;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import cn.adfi.radius.model.Radcheck;
+import cn.adfi.radius.model.Radreply;
 import cn.adfi.radius.model.User;
+import cn.adfi.radius.repo.RadcheckRepository;
+import cn.adfi.radius.repo.RadreplyRepository;
 import cn.adfi.radius.controller.UserController;
 
 /**
@@ -20,6 +27,11 @@ import cn.adfi.radius.controller.UserController;
 @Component
 public class UserControllerMonitor {
 
+	@Autowired
+	RadcheckRepository radcheckRepo;
+	@Autowired
+	RadreplyRepository radreplyRepo;
+	
 	//for aop test
 	@AfterReturning(value="execution(* cn.adfi.radius.controller.UserController.getUser(Long))",returning = "returnValue")
 	public void logControllerAccessa(JoinPoint joinPoint,Object returnValue) {
@@ -38,17 +50,37 @@ public class UserControllerMonitor {
 	}
 
 	//question!!!!
-	@AfterReturning(value="execution(* cn.adfi.radius.controller.UserController.enableUser(cn.adfi.radius.model.User))",
-					returning = "returnValue")
-	public void enableUserMonitor(JoinPoint joinPoint,Object returnValue){
-		//TODO:add user to radcheck and group check;
+	@AfterReturning(value="execution(* cn.adfi.radius.controller.helper.UserControllerHelper.userEnable(cn.adfi.radius.model.User))")
+	public void enableUserMonitor(JoinPoint joinPoint){
+		Object[] paramValues = joinPoint.getArgs();
+		User user = (User)paramValues[0];
 		
+		//add radcheck
+		Radcheck radcheck;
+		radcheck = new Radcheck(user.getAccount(),"Cleartext-Password",":=",user.getPassword());
+		radcheckRepo.save(radcheck);
+		
+		//add radreply
+		Radreply radreply;
+		SimpleDateFormat format = new SimpleDateFormat("dd:MM:yyyy-hh:mm");
+		if(null!=user.getStarttime()){
+			radreply = new Radreply(user.getAccount(),"Symbol-Start-Date-Time",":=",format.format(user.getStarttime()));
+			radreplyRepo.save(radreply);
+		}
+		
+		if(null!=user.getExpire()){
+			radreply = new Radreply(user.getAccount(),"Symbol-Start-Date-Time",":=",format.format(user.getExpire()));
+			radreplyRepo.save(radreply);
+		}
 	}
 	
-	@AfterReturning(value="execution(* cn.adfi.radius.controller.UserController.disableUser(cn.adfi.radius.model.User))",
-					returning = "returnValue")
-	public void disableUserMonitor(JoinPoint joinPoint,Object returnValue){
-		//TODO:del user info from radcheck and group check
+	@AfterReturning(value="execution(* cn.adfi.radius.controller.helper.UserControllerHelper.userDisable(cn.adfi.radius.model.User))")
+	public void disableUserMonitor(JoinPoint joinPoint){
+		Object[] paramValues = joinPoint.getArgs();
+		User user = (User)paramValues[0];
+		
+		radcheckRepo.deleteRadcheckByUsername(user.getAccount());
+		radreplyRepo.deleteRadreplyByUsername(user.getAccount());
 	}
 	
 	@Before(value="execution(* cn.adfi.radius.controller.UserController.deleteUser(..))")

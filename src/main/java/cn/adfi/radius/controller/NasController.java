@@ -12,11 +12,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.adfi.radius.model.Nas;
@@ -31,6 +33,7 @@ import cn.adfi.radius.util.exceptions.NasNotFoundException;
 @RestController
 @EnableAutoConfiguration
 @RequestMapping("/nas")
+@Transactional
 public class NasController {
 	Sort sort = new Sort(new Order(Direction.DESC,"id"));
 	
@@ -38,19 +41,19 @@ public class NasController {
 	NasRepository nasRepository;
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public Nas addNas(@RequestBody Nas nas){
+	public @ResponseBody Nas addNas(@RequestBody Nas nas){
 		return nasRepository.save(nas);
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public Page<Nas> getNas(@RequestParam("page")int page,
-			@RequestParam("size") int size) {
+	public @ResponseBody Page<Nas> getNas(@RequestParam(value="page",required = false, defaultValue="0")int page,
+			@RequestParam(value="size",required = false, defaultValue="10") int size) {
 		Pageable pageable = new PageRequest(page, size, Direction.DESC, "id");
 		return nasRepository.findAll(pageable);
 	}
 	
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
-	public Nas getNas(@PathVariable("id") Long id) throws NasNotFoundException {
+	public @ResponseBody Nas getNas(@PathVariable("id") Long id) throws NasNotFoundException {
 		Nas find = nasRepository.findOne(id);
 		if(null == find){
 			throw new NasNotFoundException("Nas not find for id:"+id);
@@ -82,22 +85,22 @@ public class NasController {
 	}
 	
 	@RequestMapping(value="/server/{key}",method=RequestMethod.GET)
-	public Page<Nas> findNasByServer(@RequestParam("page")int page,
-			@RequestParam("size")int size,
+	public Page<Nas> findNasByServer(@RequestParam(value="page",required = false, defaultValue="0")int page,
+			@RequestParam(value="size",required = false, defaultValue="10") int size,
 			@PathVariable("key") String server){
 		return nasRepository.findNasByServer(server, new PageRequest(page, size, Direction.DESC, "id"));
 	}
 	
 	@RequestMapping(value="/type/{key}",method=RequestMethod.GET)
-	public Page<Nas> findNasByType(@RequestParam("page")int page,
-			@RequestParam("size")int size,
+	public Page<Nas> findNasByType(@RequestParam(value="page",required = false, defaultValue="0")int page,
+			@RequestParam(value="size",required = false, defaultValue="10") int size,
 			@PathVariable("key") String type){
 		return nasRepository.findNasByType(type, new PageRequest(page, size, Direction.DESC, "id"));
 	}
 	
 	@RequestMapping(value="/nasname/{key}",method=RequestMethod.GET)
-	public Page<Nas> findNasByNasname(@RequestParam("page")int page,
-			@RequestParam("size")int size,
+	public Page<Nas> findNasByNasname(@RequestParam(value="page",required = false, defaultValue="0")int page,
+			@RequestParam(value="size",required = false, defaultValue="10") int size,
 			@PathVariable("key") String nasname){
 		return nasRepository.findNasByNasname(nasname, new PageRequest(page, size, Direction.DESC, "id"));
 	}

@@ -3,45 +3,45 @@
 	</div>
 	<div class="col-md-8 column">
 
-		<form name='nasForm' class="form-horizontal" role="form" novalidate>
+		<form name='ruleForm' class="form-horizontal" role="form" novalidate>
         	<div class="form-group">
-	        	<label for="nasname" class="col-sm-3 control-label">Nas name:</label>
+	        	<label for="ssid" class="col-sm-3 control-label">SSID:</label>
 	        	<div class="col-sm-9">
-	            	<input id="nasname" type="text" class="form-control" ng-model="nas.nasname" name="uNasName" required/>
+	            	<input id="ssid" type="text" class="form-control" ng-model="rule.ssid" name="uSsid" />
 	            </div>
             </div>
             
             <div class="form-group">
-	            <label for="shortname" class="col-sm-3 control-label">Short name:</label>
+	            <label for="nasid" class="col-sm-3 control-label">Nasid:</label>
 	            <div class="col-sm-9">
-	        		<input id="shortname" type="text" class="form-control" ng-model="nas.shortname" name="uShortName" />
+	        		<input id="nasid" type="text" class="form-control" ng-model="rule.nasid" name="uNasid" />
 	        	</div>
 	        	
         	</div>
         	
         	<div class="form-group">
-	        	<label for="description" class="col-sm-3 control-label">Description:</label>
+	        	<label for="devtype" class="col-sm-3 control-label">Device Type:</label>
 	        	<div class="col-sm-9">
-	        		<input id="description" type="text" class="form-control" ng-model="nas.description" />
+	        		<input id="devtype" type="text" class="form-control" ng-model="rule.devtype" name="uDevtype"/>
 	        	</div>
         	</div>
         	
         	<div class="form-group">
-	        	<label for="ports" class="col-sm-3 control-label">ports:</label>
+	        	<label for="os" class="col-sm-3 control-label">Operating System:</label>
 	        	<div class="col-sm-9">
-	        		<input id="ports" type="text" class="form-control" ng-model="nas.ports" name="uPorts" />
+	        		<input id="os" type="text" class="form-control" ng-model="rule.os" name="uOs" />
 	        	</div>
 	        	
         	</div>
         	
         	<div class="form-group">
-	        	<label for="secret" class="col-sm-3 control-label">Secret:</label>
+	        	<label for="url" class="col-sm-3 control-label">Url:</label>
 	        	<div class="col-sm-9">
-	        		<input id="secret" type="text" class="form-control" ng-model="nas.secret" name="uSecret" required/>
+	        		<input id="url" type="text" class="form-control" ng-model="rule.url" name="uUrl" required/>
 	        	</div>
 	        	
         	</div>
-        	
+        	<!-- 
         	<div class="form-group has-feedback" ng-class="{'has-error':nasForm.uServer.$error.ipaddres}">
 	        	<label for="server" class="col-sm-3 control-label">Server:</label>
 	        	<div class="col-sm-9">
@@ -56,12 +56,13 @@
 	        		<input id="type" type="text" class="form-control" ng-model="nas.type" />
 	        	</div>
         	</div>
+        	 -->
         	<div class="form-group">
         		<div class="col-sm-9">
         		</div>
         		<div class="col-sm-3 control-label">
-            		<button class="btn btn-primary" ng-click="save()" ng-disabled="nasForm.$invalid">Save</button>
-            		<a href="#/system/nas" class="btn btn-primary">Cancel</a>
+            		<button class="btn btn-primary" ng-click="save()" ng-disabled="ruleForm.$invalid">Save</button>
+            		<a href="#/system/redirrule" class="btn btn-primary">Cancel</a>
             	</div>
         	</div>
         

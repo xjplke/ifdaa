@@ -3,6 +3,7 @@
  */
 package cn.adfi.radius.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -19,7 +20,12 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="USER")
-public class User {
+public class User implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8486460878516603500L;
+
 	@Id
 	@GeneratedValue
 	private Long id;

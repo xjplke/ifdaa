@@ -8,9 +8,9 @@
        		<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Search By <span class="caret"></span></button>
        		<button type="button" class="btn btn-primary" ng-show="searchby.length > 0" disabled>{{searchby}}</button>
        		<ul class="dropdown-menu" role="menu">
-         			<li><a href="javascript:void(0);" ng-click="searchby = 'nasname';pageChanged()">nasname</a></li>
-         			<li><a href="javascript:void(0);" ng-click="searchby = 'server';pageChanged()">server</a></li>
-         			<li><a href="javascript:void(0);" ng-click="searchby = 'type';pageChanged()">type</a></li>
+         			<li><a href="javascript:void(0);" ng-click="searchby = 'nasname';key='';pageChanged()">nasname</a></li>
+         			<li><a href="javascript:void(0);" ng-click="searchby = 'server';key='';pageChanged()">server</a></li>
+         			<li><a href="javascript:void(0);" ng-click="searchby = 'type';key='';pageChanged()">type</a></li>
        		</ul>
      		</div><!-- /btn-group -->
      		<input type="text" class="form-control" ng-model="key" ng-change="pageChanged()" />

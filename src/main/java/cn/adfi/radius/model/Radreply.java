@@ -1,8 +1,4 @@
-/**
- * 
- */
 package cn.adfi.radius.model;
-
 
 import java.io.Serializable;
 
@@ -12,18 +8,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-/**
- * @author shaojunwu  --sjw
- * @date 2014-5-5
- */
 @Entity
-@Table(name="radcheck")
-public class Radcheck implements Serializable{
+@Table(name="radreply")
+public class Radreply implements Serializable {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 4297613716226202997L;
-	public Radcheck(String username,String attribute,String op,String value){
+	
+	public Radreply(String username,String attribute,String op,String value){
 		this.username = username;
 		this.attribute = attribute;
 		this.op = op;
@@ -34,12 +28,8 @@ public class Radcheck implements Serializable{
 	@GeneratedValue
 	private Long id;
 	
-	//TODO to set username in radcheck as key for select! not primary key, not unique!
 	@Column(length = 64, nullable = false)
 	private String username;
-//	@ManyToOne
-//	@JoinColumn(name="username",referencedColumnName="username")
-//	private Raduser raduser;
 	
 	@Column(length = 64, nullable = false)
 	private String attribute;
@@ -112,18 +102,5 @@ public class Radcheck implements Serializable{
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	
-//	/**
-//	 * @return the raduser
-//	 */
-//	public Raduser getRaduser() {
-//		return raduser;
-//	}
-//	/**
-//	 * @param raduser the raduser to set
-//	 */
-//	public void setRaduser(Raduser raduser) {
-//		this.raduser = raduser;
-//	}
 	
 }
