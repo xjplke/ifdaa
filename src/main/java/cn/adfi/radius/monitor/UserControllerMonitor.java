@@ -39,7 +39,7 @@ public class UserControllerMonitor {
 		Long id = (Long)paramValues[0];
 		System.out.println("get User for id: " + id);
 		User user = (User)returnValue;
-		System.out.println("User for id  account: " + user.getAccount());
+		System.out.println("User for id  username: " + user.getUsername());
 		//UserController controller = (UserController)joinPoint.getTarget();
 	}
 	
@@ -57,19 +57,19 @@ public class UserControllerMonitor {
 		
 		//add radcheck
 		Radcheck radcheck;
-		radcheck = new Radcheck(user.getAccount(),"Cleartext-Password",":=",user.getPassword());
+		radcheck = new Radcheck(user.getUsername(),"Cleartext-Password",":=",user.getPassword());
 		radcheckRepo.save(radcheck);
 		
 		//add radreply
 		Radreply radreply;
 		SimpleDateFormat format = new SimpleDateFormat("dd:MM:yyyy-hh:mm");
 		if(null!=user.getStarttime()){
-			radreply = new Radreply(user.getAccount(),"Symbol-Start-Date-Time",":=",format.format(user.getStarttime()));
+			radreply = new Radreply(user.getUsername(),"Symbol-Start-Date-Time",":=",format.format(user.getStarttime()));
 			radreplyRepo.save(radreply);
 		}
 		
 		if(null!=user.getExpire()){
-			radreply = new Radreply(user.getAccount(),"Symbol-Start-Date-Time",":=",format.format(user.getExpire()));
+			radreply = new Radreply(user.getUsername(),"Symbol-Start-Date-Time",":=",format.format(user.getExpire()));
 			radreplyRepo.save(radreply);
 		}
 	}
@@ -79,8 +79,8 @@ public class UserControllerMonitor {
 		Object[] paramValues = joinPoint.getArgs();
 		User user = (User)paramValues[0];
 		
-		radcheckRepo.deleteRadcheckByUsername(user.getAccount());
-		radreplyRepo.deleteRadreplyByUsername(user.getAccount());
+		radcheckRepo.deleteRadcheckByUsername(user.getUsername());
+		radreplyRepo.deleteRadreplyByUsername(user.getUsername());
 	}
 	
 	@Before(value="execution(* cn.adfi.radius.controller.UserController.deleteUser(..))")

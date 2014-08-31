@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="terminal")
+@Table(name="tbl_terminal")
 public class Terminal {
 	
 	public Terminal(){}

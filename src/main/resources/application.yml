@@ -1,7 +1,7 @@
 # Server settings (ServerProperties)
 server:
   port: 8080
-  address: 127.0.0.1
+  address: 0.0.0.0
   sessionTimeout: 30
 #  contextPath: /
 
@@ -14,21 +14,30 @@ server:
     backgroundProcessorDelay: 30 # secs
 
 management:
-  address: 127.0.0.1
+  address: 0.0.0.0
   port: 8081
 
 spring:
-  datasource:
-    driverClassName: com.mysql.jdbc.Driver
+#  datasource:
+#    driverClassName: com.mysql.jdbc.Driver
 #    driverClassName: org.postgresql.Driver
-    url: jdbc:mysql://localhost:3306/radius
+#    url: jdbc:mysql://localhost:3306/radius
 #    url: jdbc:postgresql://localhost/radius
-    username: root
-    password: 123qwe
+#    username: root
+#    password: 123qwe
   jpa:
     database: MYSQL
     hibernate:
       ddl-auto: update # create-drop
+      
+#for druid datasource
+datasource:
+  druid:
+    driverClassName: com.mysql.jdbc.Driver    
+    url: jdbc:mysql://localhost:3306/radius
+    username: root
+    password: 123qwe      
+   
     
 info:
   app:

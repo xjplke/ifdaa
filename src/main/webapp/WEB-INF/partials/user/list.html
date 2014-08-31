@@ -28,8 +28,8 @@
         <thead>
         <tr>
           <th></th>
-          <th>account</th>
           <th>username</th>
+          <th>fullname</th>
           <th>starttime</th>
           <th>endtime</th>
           <th>is active</th>
@@ -40,8 +40,8 @@
         <tbody>
         <tr ng-repeat="user in userlist | orderBy:id:reverse">
           <td>{{user.id}}</td>
-          <td title='{{user.account}}'>{{user.account | shortcut}}</td>
           <td title='{{user.username}}'>{{user.username | shortcut}}</td>
+          <td title='{{user.fullname}}'>{{user.fullname | shortcut}}</td>
           <td title='{{user.starttime | date:"yyyy/MM/dd"}}'>{{user.starttime | date:"yyyy/MM/dd"}}</td>
           <td title='{{user.expire | date:"yyyy/MM/dd"}}'>{{user.expire | date:"yyyy/MM/dd"}}</td>
           <td title='{{nas.is_active}}'><a href='javascript:void(0);' ng-click="userFlipActive(user)"><span ng-class="'glyphicon glyphicon-{{user.isActive | booltoicontag}}'"></span></a></td>

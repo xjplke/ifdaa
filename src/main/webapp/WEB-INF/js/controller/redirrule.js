@@ -1,7 +1,8 @@
 
-function RedirRuleListCtrl($scope,$location, Restangular) {
+function RedirRuleListCtrl($scope,$rootScope,$location, Restangular) {
 	$scope.searchby = 'ssid';
 	$scope.key = '';
+	$scope.loginUser = $rootScope.loginUser;
 	
 	var searchpath = function(s){
 		return s!=''?"/"+s:"";

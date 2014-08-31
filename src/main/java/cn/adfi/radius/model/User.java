@@ -5,12 +5,21 @@ package cn.adfi.radius.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 
 
@@ -19,7 +28,7 @@ import javax.persistence.Table;
  * @date 2014-4-20
  */
 @Entity
-@Table(name="USER")
+@Table(name="tbl_user")
 public class User implements Serializable{
 	/**
 	 * 
@@ -31,16 +40,21 @@ public class User implements Serializable{
 	private Long id;
 
 	@Column(unique = true, length = 64, nullable = false)
-	private String account;
+	private String username;
 	
 	@Column(length=32)
 	private String password;
 	
 	@Column(length=64)
-	private String username;
+	private String fullname;
 
 	@Column(unique = true,length=64)
 	private String email;
+	
+	@Cascade(value = CascadeType.SAVE_UPDATE)
+	@ManyToMany(fetch = FetchType.LAZY) 
+	@JoinTable(name="tbl_user_roles",joinColumns={@JoinColumn(name="userId")},inverseJoinColumns={@JoinColumn(name="roleId")})
+	private Set<Role> roles = new HashSet<Role>();
 	
 
 	@Column(unique = true,length=64)
@@ -78,17 +92,18 @@ public class User implements Serializable{
 	public void setId(Long id) {
 		this.id = id;
 	}
-	/**
-	 * @return the account
-	 */
-	public String getAccount() {
-		return account;
+	
+	public String getUsername() {
+		return username;
 	}
-	/**
-	 * @param account the account to set
-	 */
-	public void setAccount(String account) {
-		this.account = account;
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getFullname() {
+		return fullname;
+	}
+	public void setFullname(String fullname) {
+		this.fullname = fullname;
 	}
 	/**
 	 * @return the password
@@ -102,18 +117,7 @@ public class User implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	/**
-	 * @return the username
-	 */
-	public String getUsername() {
-		return username;
-	}
-	/**
-	 * @param username the username to set
-	 */
-	public void setUsername(String username) {
-		this.username = username;
-	}
+	
 	/**
 	 * @return the email
 	 */
@@ -222,5 +226,35 @@ public class User implements Serializable{
 	public void setExpire(Date expire) {
 		this.expire = expire;
 	}
+	public Set<Role> getRoles() {
+		return roles;
+	}
+	
+	public Set<String> getRolesStringSet(){
+		Set<String> set = new HashSet<String>();
+		for(Role role:roles){
+			set.add(role.getRole());
+		}
+		return set;
+	}
+	
+	public Set<String> getPermissionStringSet(){
+		Set<String> set = new HashSet<String>();
+		for(Role role:getRoles()){
+			for(Permission permission:role.getPermissions()){
+				set.add(permission.getPermission());
+			}
+		}
+		return set;
+	}
+	
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+	
+	
 	
 }

@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="redirrule")
+@Table(name="tbl_redirrule")
 public class RedirRule {
 	@Id
 	@GeneratedValue

@@ -1,7 +1,9 @@
 
-function UserListCtrl($scope,$location, Restangular) {
-	$scope.searchby = 'account';
+function UserListCtrl($scope,$rootScope,$location, Restangular) {
+	$scope.searchby = 'username';
 	$scope.key = '';
+	
+	$scope.loginUser = $rootScope.loginUser;
 	
 	var searchpath = function(s){
 		return s!=''?"/"+s:"";

@@ -3,9 +3,10 @@ function dot2_(ip){
 	return ip.replace(/\./g,"_");
 }
 
-function RecordListCtrl($scope,$location, Restangular) {
+function RecordListCtrl($scope,$rootScope,$location, Restangular) {
 	$scope.searchby = 'account';
 	$scope.key = '';
+	$scope.loginUser = $rootScope.loginUser;
 	
 	var searchpath = function(s){
 		return s!=''?"/"+s:"";

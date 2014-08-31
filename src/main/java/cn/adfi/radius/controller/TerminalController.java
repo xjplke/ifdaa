@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @EnableTransactionManagement
 @RestController
 @EnableAutoConfiguration
-@RequestMapping("/terminal")
+@RequestMapping("/rest/terminal")
 @Transactional
 public class TerminalController {
 

@@ -1,7 +1,8 @@
 
-function NasListCtrl($scope,$location, Restangular) {
+function NasListCtrl($scope,$rootScope,$location, Restangular) {
 	$scope.searchby = 'type';
 	$scope.key = '';
+	$scope.loginUser = $rootScope.loginUser;
 	
 	var searchpath = function(s){
 		return s!=''?"/"+s:"";

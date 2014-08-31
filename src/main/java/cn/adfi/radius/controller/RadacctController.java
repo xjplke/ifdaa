@@ -5,6 +5,7 @@ package cn.adfi.radius.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.data.domain.Page;
@@ -27,17 +28,19 @@ import cn.adfi.radius.repo.RadacctRepository;
 @EnableTransactionManagement
 @RestController
 @EnableAutoConfiguration
-@RequestMapping("/record")
+@RequestMapping("/rest/record")
 public class RadacctController {
 	@Autowired
 	RadacctRepository radacctRepository;
 	
+	@RequiresPermissions("radacct:view")
 	@RequestMapping(method=RequestMethod.GET)
 	public Page<Radacct> getRadaccts(@RequestParam(value="page",required = false, defaultValue="0")int page,
 			@RequestParam(value="size",required = false, defaultValue="10")int size){
 		return radacctRepository.findAll(new PageRequest(page, size, Direction.DESC, "radacctid"));
 	}
 	
+	@RequiresPermissions("radacct:view")
 	@RequestMapping(value="/account/{account}",method=RequestMethod.GET)
 	public Page<Radacct> getRadacctsByAccount(@RequestParam(value="page",required = false, defaultValue="0")int page,
 			@RequestParam(value="size",required = false, defaultValue="10")int size,
@@ -45,6 +48,7 @@ public class RadacctController {
 		return radacctRepository.findByAccount(account,new PageRequest(page, size, Direction.DESC, "radacctid"));
 	}
 	
+	@RequiresPermissions("radacct:view")
 	@RequestMapping(value="/usermac/{usermac}",method=RequestMethod.GET)
 	public Page<Radacct> getRadacctsByUsermac(@RequestParam(value="page",required = false, defaultValue="0")int page,
 			@RequestParam(value="size",required = false, defaultValue="10")int size,
@@ -56,6 +60,7 @@ public class RadacctController {
 		return ip.replace('_', '.');
 	}
 	
+	@RequiresPermissions("radacct:view")
 	@RequestMapping(value="/userip/{userip}",method=RequestMethod.GET)
 	public Page<Radacct> getRadacctsByUserip(@RequestParam(value="page",required = false, defaultValue="0")int page,
 			@RequestParam(value="size",required = false, defaultValue="10")int size,
@@ -64,6 +69,7 @@ public class RadacctController {
   		return radacctRepository.findByUserip(_todot(userip),new PageRequest(page, size, Direction.DESC, "radacctid"));
 	}
 	
+	@RequiresPermissions("radacct:view")
 	@RequestMapping(value="/nasip/{nasip}",method=RequestMethod.GET)
 	public Page<Radacct> getRadacctsBynasip(@RequestParam(value="page",required = false, defaultValue="0")int page,
 			@RequestParam(value="size",required = false, defaultValue="10")int size,
@@ -71,6 +77,7 @@ public class RadacctController {
 		return radacctRepository.findByNasip(_todot(nasip),new PageRequest(page, size, Direction.DESC, "radacctid"));
 	}
 	
+	@RequiresPermissions("radacct:view")
 	@RequestMapping(value="/apmacssid/{apmacssid}",method=RequestMethod.GET)
 	public Page<Radacct> getRadacctsByapmacssid(@RequestParam(value="page",required = false, defaultValue="0")int page,
 			@RequestParam(value="size",required = false, defaultValue="10")int size,

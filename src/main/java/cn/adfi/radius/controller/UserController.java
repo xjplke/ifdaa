@@ -2,6 +2,7 @@ package cn.adfi.radius.controller;
 
 import java.util.Date;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.data.domain.Page;
@@ -29,7 +30,7 @@ import cn.adfi.radius.util.exceptions.UserPasswordErrorException;
 @EnableTransactionManagement
 @RestController
 @EnableAutoConfiguration
-@RequestMapping("/user")
+@RequestMapping("/rest/user")
 @Transactional
 public class UserController {
 	
@@ -41,6 +42,7 @@ public class UserController {
 	@Autowired
 	UserControllerHelper userControllerHelper;
 	
+	@RequiresPermissions("user:edit")
 	@RequestMapping(method=RequestMethod.POST)
 	public User addUser(@RequestBody User user){
 		user.setCreatedDate(new Date());
@@ -49,6 +51,7 @@ public class UserController {
 		return userRepository.save(user);
 	}
 	
+	@RequiresPermissions("user:view")
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
 	public User getUser(@PathVariable("id") Long id) throws Exception {
 		User user = userRepository.findOne(id);
@@ -80,6 +83,7 @@ public class UserController {
 		return userRepository.save(user);
 	}
 	
+	@RequiresPermissions("user:edit")
 	@RequestMapping(value="/{id}",method=RequestMethod.PUT)
 	public User updateUser(@PathVariable("id") Long id,@RequestBody User user) throws Exception{
 		if(user.getExpire()!=null && user.getStarttime()!=null && user.getExpire().before(user.getStarttime())){
@@ -94,11 +98,13 @@ public class UserController {
 		return updateUser(find,user);
 	}
 	
+	@RequiresPermissions("user:edit")
 	@RequestMapping(value="/{id}",method=RequestMethod.DELETE)
 	public void deleteUser(@PathVariable("id") Long id) throws Exception{
 		userRepository.delete(id);
 	}
 	
+	@RequiresPermissions("user:view")
 	@RequestMapping(method=RequestMethod.GET)
 	public Page<User> getUsers(@RequestParam("page")int page,
 					@RequestParam("size") int size){
@@ -106,18 +112,20 @@ public class UserController {
 		return userRepository.findAll(pageable);
 	}
 	
+	@RequiresPermissions("user:view")
 	@RequestMapping(value="/account/{account}",method=RequestMethod.GET)
 	public Page<User> findUsersByAccount(@PathVariable("account")String account,
 			@RequestParam("page")int page, @RequestParam("size") int size){
 		Pageable pageable = new PageRequest(page, size, Direction.DESC, "id");
-		return userRepository.findByAccount(account,pageable);
+		return userRepository.findByUsername(account,pageable);
 	}
 	
+	@RequiresPermissions("user:view")
 	@RequestMapping(value="/username/{username}",method=RequestMethod.GET)
 	public Page<User> findUsersByUsername(@PathVariable("username")String username,
 			@RequestParam("page")int page, @RequestParam("size") int size){
 		Pageable pageable = new PageRequest(page, size, Direction.DESC, "id");
-		return userRepository.findByUsername(username,pageable);
+		return userRepository.findByFullname(username,pageable);
 	}
 	
 	//for aop
@@ -127,6 +135,7 @@ public class UserController {
 		userControllerHelper.userEnable(user);
 	}
 	
+	@RequiresPermissions("user:edit")
 	@RequestMapping(value="/{id}/active",method=RequestMethod.POST)
 	public void userEnable(@PathVariable("id")Long id) throws Exception{
 		User find = userRepository.findOne(id);
@@ -146,6 +155,7 @@ public class UserController {
 		userControllerHelper.userDisable(user);
 	}
 	
+	@RequiresPermissions("user:edit")
 	@RequestMapping(value="/{id}/active",method=RequestMethod.DELETE)
 	public void userDisable(@PathVariable("id")Long id) throws Exception{
 		User find = userRepository.findOne(id);
@@ -163,6 +173,7 @@ public class UserController {
 		user.setPassword(newpassword);
 	}
 	
+	@RequiresPermissions("user:edit")
 	@RequestMapping(value="/{id}/passowrd",method=RequestMethod.POST)
 	public void userChangePassword(@PathVariable("id")Long id,
 							@RequestParam("oldpassword") String oldpassword,

@@ -65,7 +65,7 @@ public class MacAddress {
 	public boolean equals(MacAddress mac){
 		return this.mac!=null&&mac.mac!=null&mac.mac.equals(this.mac);
 	} 
-	
+	/*
 	public static void main(String []args){
 		MacAddress m1 = new MacAddress("11:22:33:44:55:66");
 		MacAddress m2 = new MacAddress(new MacAddress("22-33-44-55-66-77").mac);
@@ -75,5 +75,5 @@ public class MacAddress {
 		System.out.println("m3 = "+m3.macstr(':'));
 		System.out.println("m3.equals(m1) is "+ m3.equals(m1));
 		System.out.println("m3.equals(m2) is "+ m3.equals(m2));
-	}
+	}*/
 }

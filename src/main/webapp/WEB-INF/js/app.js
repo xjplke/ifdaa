@@ -83,6 +83,10 @@ adfiApp.config(['$routeProvider','$httpProvider','RestangularProvider',
     			controller: 'RecordListCtrl'
     		}).
     		
+    		when('/login',{
+    			templateUrl: 'partials/login.html',
+    			controller: 'LoginController'
+    		}).
     		
     		otherwise({
     			redirectTo: '/'
@@ -98,6 +102,8 @@ adfiApp.config(['$routeProvider','$httpProvider','RestangularProvider',
     		};
     	});
     	
+    	
+    	RestangularProvider.setBaseUrl("/rest");
     	//config RestangularProvider
     	RestangularProvider.addResponseInterceptor(function(data, operation, what, url, response, deferred) {
 			var extractedData;
@@ -111,6 +117,20 @@ adfiApp.config(['$routeProvider','$httpProvider','RestangularProvider',
 			return extractedData;
 		});
   	}]);
+
+adfiApp.run(["$rootScope","$location","Restangular",function($rootScope,$location,Restangular){
+	$rootScope.loginUser = {};
+	$rootScope.loginUser.logined = false;
+	Restangular.one("me").get().then(function(user){
+		if(user === undefined){
+			$location.path("login");
+		}else{
+			$rootScope.loginUser = user;
+			$rootScope.loginUser.logined = true;
+		}
+	});
+	
+}]);
 
 
 adfiApp.filter('shortcut',function(){

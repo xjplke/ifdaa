@@ -3,6 +3,7 @@
  */
 package cn.adfi.radius.controller;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.data.domain.Page;
@@ -32,7 +33,7 @@ import cn.adfi.radius.util.exceptions.NasNotFoundException;
 @EnableTransactionManagement
 @RestController
 @EnableAutoConfiguration
-@RequestMapping("/nas")
+@RequestMapping("/rest/nas")
 @Transactional
 public class NasController {
 	Sort sort = new Sort(new Order(Direction.DESC,"id"));
@@ -40,11 +41,13 @@ public class NasController {
 	@Autowired
 	NasRepository nasRepository;
 	
+	@RequiresPermissions("nas:write")
 	@RequestMapping(method=RequestMethod.POST)
 	public @ResponseBody Nas addNas(@RequestBody Nas nas){
 		return nasRepository.save(nas);
 	}
 	
+	@RequiresPermissions("nas:edit")
 	@RequestMapping(method=RequestMethod.GET)
 	public @ResponseBody Page<Nas> getNas(@RequestParam(value="page",required = false, defaultValue="0")int page,
 			@RequestParam(value="size",required = false, defaultValue="10") int size) {
@@ -52,6 +55,7 @@ public class NasController {
 		return nasRepository.findAll(pageable);
 	}
 	
+	@RequiresPermissions("nas:view")
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
 	public @ResponseBody Nas getNas(@PathVariable("id") Long id) throws NasNotFoundException {
 		Nas find = nasRepository.findOne(id);
@@ -61,6 +65,7 @@ public class NasController {
 		return find;
 	}
 	
+	@RequiresPermissions("nas:edit")
 	@RequestMapping(value="/{id}",method=RequestMethod.PUT)
 	public Nas updateNas(@PathVariable("id") Long id,@RequestBody Nas nas) throws NasNotFoundException {
 		Nas find = nasRepository.findOne(id);
@@ -79,11 +84,13 @@ public class NasController {
 		return nasRepository.save(nas);
 	}
 	
+	@RequiresPermissions("nas:edit")
 	@RequestMapping(value="/{id}",method=RequestMethod.DELETE)
 	public void deleteNas(@PathVariable("id") Long id) {
 		nasRepository.delete(id);
 	}
 	
+	@RequiresPermissions("nas:view")
 	@RequestMapping(value="/server/{key}",method=RequestMethod.GET)
 	public Page<Nas> findNasByServer(@RequestParam(value="page",required = false, defaultValue="0")int page,
 			@RequestParam(value="size",required = false, defaultValue="10") int size,
@@ -91,6 +98,7 @@ public class NasController {
 		return nasRepository.findNasByServer(server, new PageRequest(page, size, Direction.DESC, "id"));
 	}
 	
+	@RequiresPermissions("nas:view")
 	@RequestMapping(value="/type/{key}",method=RequestMethod.GET)
 	public Page<Nas> findNasByType(@RequestParam(value="page",required = false, defaultValue="0")int page,
 			@RequestParam(value="size",required = false, defaultValue="10") int size,
@@ -98,6 +106,7 @@ public class NasController {
 		return nasRepository.findNasByType(type, new PageRequest(page, size, Direction.DESC, "id"));
 	}
 	
+	@RequiresPermissions("nas:view")
 	@RequestMapping(value="/nasname/{key}",method=RequestMethod.GET)
 	public Page<Nas> findNasByNasname(@RequestParam(value="page",required = false, defaultValue="0")int page,
 			@RequestParam(value="size",required = false, defaultValue="10") int size,
