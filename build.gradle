@@ -5,9 +5,9 @@ buildscript {
 	}
     repositories {
     	//mavenLocal()
-    	//mavenCentral()
+    	mavenCentral()
     	//maven {url "https://raw.githubusercontent.com/HaraldWalker/user-agent-utils/mvn-repo/"}
-    	maven { url "http://maven.oschina.net/content/groups/public/"}
+    	//maven { url "http://maven.oschina.net/content/groups/public/"}
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -25,8 +25,8 @@ jar {
 
 repositories {
     mavenLocal()
-    //mavenCentral()
-    maven { url "http://maven.oschina.net/content/groups/public/" }
+    mavenCentral()
+    //maven { url "http://maven.oschina.net/content/groups/public/" }
 }
 
 dependencies {
@@ -36,8 +36,8 @@ dependencies {
     //compile("org.springframework.boot:spring-boot-starter-security:${springBootVersion}")
     compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
     compile("mysql:mysql-connector-java:5.1.25")
-    //compile("bitwalker:UserAgentUtils:1.13")
-    compile("bitwalker:UserAgentUtils:1.14-snapshot")
+    compile("bitwalker:UserAgentUtils:1.13")
+    //compile("bitwalker:UserAgentUtils:1.14-snapshot")
 
     compile("com.alibaba:druid:1.0.8")
     compile("org.apache.shiro:shiro-core:1.2.2")
