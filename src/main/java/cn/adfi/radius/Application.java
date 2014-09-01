@@ -36,7 +36,8 @@ public class Application  extends WebMvcConfigurerAdapter implements EmbeddedSer
     
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/**").addResourceLocations("/WEB-INF/");
+        registry.addResourceHandler("/**").addResourceLocations("/");
+        registry.addResourceHandler("/").addResourceLocations("/index.html");
     }
     
 //    @Bean

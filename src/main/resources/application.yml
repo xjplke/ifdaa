@@ -1,9 +1,9 @@
 # Server settings (ServerProperties)
 server:
-  port: 8080
+  port: 80
   address: 0.0.0.0
   sessionTimeout: 30
-#  contextPath: /
+  contextPath: ""
 
   # Tomcat specifics
   tomcat:

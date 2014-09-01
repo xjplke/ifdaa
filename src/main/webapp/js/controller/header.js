@@ -1,3 +1,3 @@
 function HeadController($scope,$rootScope){
-	$scope.loginUser = $rootScope.user;
+	$scope.loginUser = $rootScope.loginUser;
 }

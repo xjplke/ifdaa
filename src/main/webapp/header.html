@@ -15,8 +15,8 @@
   			</div>
 
   <!-- Collect the nav links, forms, and other content for toggling -->
-  			<div class="collapse navbar-collapse" id="top_navbar" ng-show="loginUser.logined">
-   				<ul class="nav navbar-nav">
+  			<div class="collapse navbar-collapse" id="top_navbar" >
+   				<ul class="nav navbar-nav" ng-show="loginUser.logined">
     
      				<!-- system -->
       				<li class="dropdown">
@@ -49,8 +49,10 @@
         				</ul>
       				</li>
       			</ul>
-      			<ul class="nav navbar-nav navbar-right" ng-show="!loginUser.logined">
+      			<ul class="nav navbar-nav navbar-right" ng-show="loginUser.logined">
+      				<li>
   					<a href="javascript:void(0);" ng-click="logout()" ><span class="glyphicon glyphicon-log-out"></a>
+  					</li>
 				</ul>
   			</div><!-- /.navbar-collapse -->
   			
