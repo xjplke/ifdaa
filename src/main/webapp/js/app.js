@@ -6,18 +6,19 @@ var adfiApp = angular.module('adfiApp', [
   'ngRoute',
   'ngGrid',
   'restangular',
+  'angularShiro',
   //'ui.router',
   'ui.bootstrap'
   //'adfiControllers'
 ]);
 
-adfiApp.config(['$routeProvider','$httpProvider','RestangularProvider',
-    function($routeProvider,$httpProvider,RestangularProvider) {
+adfiApp.config(['$routeProvider','$httpProvider','RestangularProvider','angularShiroConfigProvider',
+    function($routeProvider,$httpProvider,RestangularProvider,angularShiroConfigProvider) {
     	$routeProvider.
     		when('/', {
-    			//templateUrl: 'partials/dashboard.html',
-    			templateUrl: 'partials/system/nas/list.html',
-    			controller: 'NasListCtrl'
+    			templateUrl: 'partials/dashboard.html',
+    			//templateUrl: 'partials/system/nas/list.html',
+    			controller: ''
     		}).
     		
     		
@@ -84,7 +85,7 @@ adfiApp.config(['$routeProvider','$httpProvider','RestangularProvider',
     		}).
     		
     		when('/login',{
-    			templateUrl: 'partials/login.html',
+    			templateUrl:  'partials/dashboard.html',
     			controller: 'LoginController'
     		}).
     		
@@ -116,8 +117,13 @@ adfiApp.config(['$routeProvider','$httpProvider','RestangularProvider',
 			}
 			return extractedData;
 		});
+    	
+    	//angularShiroConfigProvider.options.urls['/**/*'] = 'authc';
+    	angularShiroConfigProvider.options.login.uri = '/rest/authenticate';
+    	angularShiroConfigProvider.options.logout.uri = '/rest/logout';
   	}]);
 
+/*
 adfiApp.run(["$rootScope","$location","Restangular",function($rootScope,$location,Restangular){
 	$rootScope.loginUser = {};
 	$rootScope.loginUser.logined = false;
@@ -130,7 +136,7 @@ adfiApp.run(["$rootScope","$location","Restangular",function($rootScope,$locatio
 		}
 	});
 	
-}]);
+}]);*/
 
 
 adfiApp.filter('shortcut',function(){

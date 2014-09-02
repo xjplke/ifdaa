@@ -1,0 +1,14 @@
+{
+    "name":  "rlictrl",
+    "version": "0.0.1",
+    "dependencies": {
+    	"jquery": "1.11.1",
+    	"underscore": "1.6.0",
+        "angular": "1.2.21",
+        "angular-bootstrap": "0.11.0",
+        "angular-route": "1.2.21",
+        "restangular": "1.4.0",
+        "bootstrap": "3.1.1",
+        "angular-shiro": "*"
+    }
+}

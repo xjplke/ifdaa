@@ -1,6 +1,6 @@
 # Server settings (ServerProperties)
 server:
-  port: 80
+  port: 8080
   address: 0.0.0.0
   sessionTimeout: 30
   contextPath: ""
@@ -28,7 +28,7 @@ spring:
   jpa:
     database: MYSQL
     hibernate:
-      ddl-auto: update # create-drop
+      ddl-auto: validate #update # create-drop
       
 #for druid datasource
 datasource:
