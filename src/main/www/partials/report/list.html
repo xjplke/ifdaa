@@ -1,0 +1,65 @@
+<div class="row clearfix">
+	<div class="col-md-1 column">
+	</div>
+	<div class="col-md-10 column">
+
+	<div class="input-group">
+    		<div class="input-group-btn" dropdown>
+       		<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Search By <span class="caret"></span></button>
+       		<button type="button" class="btn btn-primary" ng-show="searchby.length > 0" disabled>{{searchby}}</button>
+       		<ul class="dropdown-menu" role="menu">
+         			<li><a href="javascript:void(0);" ng-click="searchby = 'account';key='';pageChanged()">account</a></li>
+         			<li><a href="javascript:void(0);" ng-click="searchby = 'usermac';key='';pageChanged()">usermac</a></li>
+         			<li><a href="javascript:void(0);" ng-click="searchby = 'userip';key='';pageChanged()">userip</a></li>
+         			<li><a href="javascript:void(0);" ng-click="searchby = 'apmacssid';key='';pageChanged()">apmacssid</a></li>
+         			<li><a href="javascript:void(0);" ng-click="searchby = 'nasip';key='';pageChanged()">nasip</a></li>
+       		</ul>
+     		</div><!-- /btn-group -->
+     		<input type="text" class="form-control" ng-model="key" ng-change="pageChanged()" />
+     		
+   	</div><!-- /input-group -->    	
+	
+	<table class="table table-striped table-hover">
+        <thead>
+        <tr>
+          <th></th>
+          <th>account</th>
+          <th>usermac</th>
+          <th>userip</th>
+          <th>upflow</th>
+          <th>downflow</th>
+          <th>online-time</th>
+          <th>start-time</th>
+          <th>stop-time</th>
+          <th>apmac-ssid</th>
+          <th>nasip</th>
+          <th></th>
+        </tr>
+        </thead>
+        
+        <tbody>
+        <tr ng-repeat="radacct in recordlist | orderBy:radacctid:reverse">
+          <td>{{radacct.radacctid}}</td>
+          <td title='{{radacct.username}}'>{{radacct.username | shortcut}}</td>
+          <td title='{{radacct.callingstationid}}'>{{radacct.callingstationid | shortcut}}</td>
+          <td title='{{radacct.framedipaddress}}'>{{radacct.framedipaddress | shortcut}}</td>
+          <td title='{{radacct.acctinputoctets}}'>{{radacct.acctinputoctets}}</td>
+          <td title='{{radacct.acctoutputoctets}}'>{{radacct.acctoutputoctets}}</td>
+          <td title='{{radacct.acctsessiontime}}'>{{radacct.acctsessiontime}}</td>
+          <td title='{{radacct.acctstarttime}}'>{{radacct.acctstarttime | date:"yyyy/MM/dd hh:mm:ss"}}</td>
+          <td title='{{radacct.acctstoptime}}'>{{radacct.acctstoptime | date:"yyyy/MM/dd hh:mm:ss"}}</td>
+          <td title='{{radacct.calledstationid}}'>{{radacct.calledstationid}}</td>
+          <td title='{{radacct.calledstationid}}'>{{radacct.nasipaddress}}</td>
+        </tr>
+        </tbody>
+        <tfoot>
+        	<tr><td colspan=8 align='right'>
+        	<pagination total-items="page.totalElements" ng-model="page.number" max-size="6" class="pagination-sm" 
+        		boundary-links="true" rotate="false" num-pages="page.totalPages" items-per-page="page.size" ng-change="pageChanged()"></pagination>
+        	</td></tr>
+        </tfoot>
+      </table>
+	
+	<div class="col-md-1 column">
+	</div>
+</div>

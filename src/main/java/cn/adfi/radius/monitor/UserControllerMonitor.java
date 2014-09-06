@@ -12,12 +12,12 @@ import org.aspectj.lang.JoinPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import cn.adfi.radius.controller.UserController;
 import cn.adfi.radius.model.Radcheck;
 import cn.adfi.radius.model.Radreply;
 import cn.adfi.radius.model.User;
 import cn.adfi.radius.repo.RadcheckRepository;
 import cn.adfi.radius.repo.RadreplyRepository;
-import cn.adfi.radius.controller.UserController;
 
 /**
  * @author shaojunwu  --sjw

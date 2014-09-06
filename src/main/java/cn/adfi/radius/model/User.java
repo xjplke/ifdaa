@@ -9,10 +9,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
@@ -29,6 +34,12 @@ import org.hibernate.annotations.CascadeType;
  */
 @Entity
 @Table(name="tbl_user")
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(
+    name="discriminator",
+    discriminatorType=DiscriminatorType.STRING
+)
+@DiscriminatorValue(value="User")
 public class User implements Serializable{
 	/**
 	 * 
@@ -241,8 +252,8 @@ public class User implements Serializable{
 	public Set<String> getPermissionStringSet(){
 		Set<String> set = new HashSet<String>();
 		for(Role role:getRoles()){
-			for(Permission permission:role.getPermissions()){
-				set.add(permission.getPermission());
+			for(String permission:role.getPermissions()){
+				set.add(permission);
 			}
 		}
 		return set;
@@ -251,9 +262,7 @@ public class User implements Serializable{
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
-	}
+	
 	
 	
 	

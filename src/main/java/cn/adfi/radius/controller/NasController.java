@@ -41,13 +41,13 @@ public class NasController {
 	@Autowired
 	NasRepository nasRepository;
 	
-	@RequiresPermissions("nas:write")
+	@RequiresPermissions("nas:edit")
 	@RequestMapping(method=RequestMethod.POST)
 	public @ResponseBody Nas addNas(@RequestBody Nas nas){
 		return nasRepository.save(nas);
 	}
 	
-	@RequiresPermissions("nas:edit")
+	@RequiresPermissions("nas:view")
 	@RequestMapping(method=RequestMethod.GET)
 	public @ResponseBody Page<Nas> getNas(@RequestParam(value="page",required = false, defaultValue="0")int page,
 			@RequestParam(value="size",required = false, defaultValue="10") int size) {

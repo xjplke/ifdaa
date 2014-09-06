@@ -11,7 +11,10 @@ import java.util.Date;
  * 
  */
 @Entity
-@Table(name="radacct")
+@Table(name="radacct",indexes = {
+	@Index(columnList = "acctsessionid",name="acctsessionid")
+})
+
 public class Radacct implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -28,6 +31,7 @@ public class Radacct implements Serializable {
 	private BigInteger acctoutputoctets;
 
 	@Column(nullable=false, length=64)
+	
 	private String acctsessionid;
 
 	private int acctsessiontime;

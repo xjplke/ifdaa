@@ -60,7 +60,7 @@ public class WADLController {
         Map<RequestMappingInfo, HandlerMethod> handletMethods = handlerMapping.getHandlerMethods();
         for (Map.Entry<RequestMappingInfo, HandlerMethod> entry : handletMethods.entrySet()) {
              
-              
+            
             HandlerMethod handlerMethod = entry.getValue();
              
             Object object = handlerMethod.getBean();
@@ -102,7 +102,7 @@ public class WADLController {
                     Class<?> paramType =paramTypes[i];
                     i++;
                     for (Annotation annotation2 : annotation) {
-                     
+                    	
                         if (annotation2 instanceof RequestParam ) {
                             RequestParam param2 = (RequestParam)annotation2;
                             Param waldParam = new Param();

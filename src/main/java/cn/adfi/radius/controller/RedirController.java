@@ -126,7 +126,7 @@ public class RedirController {
 	
 	
 	//below methods are crud for redir rule
-	@RequiresPermissions("redir:view")
+	@RequiresPermissions("redirrule:view")
 	@RequestMapping(value="/redirrule",method=RequestMethod.GET)
 	public Page<RedirRule> getRedirRules(@RequestParam(value="page",required = false, defaultValue="0")int page,
 			@RequestParam(value="size",required = false, defaultValue="10") int size) {
@@ -134,19 +134,19 @@ public class RedirController {
 		return redirRuleRepo.findAll(pageable);
 	}
 	
-	@RequiresPermissions("redir:edit")
+	@RequiresPermissions("redirrule:edit")
 	@RequestMapping(value="/redirrule",method=RequestMethod.POST)
 	public RedirRule createRedirRule(@RequestBody RedirRule rule){
 		return redirRuleRepo.save(rule);
 	}
 	
-	@RequiresPermissions("redir:view")
+	@RequiresPermissions("redirrule:view")
 	@RequestMapping(value="/redirrule/{id}",method=RequestMethod.GET)
 	public RedirRule getRedirRule(@PathVariable("id")Long id){
 		return redirRuleRepo.findOne(id);
 	}
 	
-	@RequiresPermissions("redir:edit")
+	@RequiresPermissions("redirrule:edit")
 	@RequestMapping(value="/redirrule/{id}",method=RequestMethod.PUT)
 	public RedirRule updateRedirRule(@PathVariable("id")Long id,@RequestBody RedirRule rule) throws Exception{
 		RedirRule find = redirRuleRepo.findOne(id);
@@ -161,13 +161,13 @@ public class RedirController {
 		return redirRuleRepo.save(find);
 	}
 	
-	@RequiresPermissions("redir:edit")
+	@RequiresPermissions("redirrule:edit")
 	@RequestMapping(value="/redirrule/{id}",method=RequestMethod.DELETE)
 	public void delRedirRuel(@PathVariable("id")Long id){
 		redirRuleRepo.delete(id);
 	}
 	
-	@RequiresPermissions("redir:view")
+	@RequiresPermissions("redirrule:view")
 	@RequestMapping(value="/redirrule/ssid/{ssid}",method=RequestMethod.GET)
 	public Page<RedirRule> findRedirRuleBySsid(@PathVariable("ssid")String ssid,
 			@RequestParam(value="page",required = false, defaultValue="0")int page,
@@ -175,7 +175,7 @@ public class RedirController {
 		return redirRuleRepo.findRuleBySsid(ssid, new PageRequest(page, size, Direction.DESC, "id"));
 	}
 	
-	@RequiresPermissions("redir:view")
+	@RequiresPermissions("redirrule:view")
 	@RequestMapping(value="/redirrule/nasid/{nasid}",method=RequestMethod.GET)
 	public Page<RedirRule> findRedirRuleByNasid(@PathVariable("nasid")String nasid,
 			@RequestParam(value="page",required = false, defaultValue="0")int page,
@@ -183,7 +183,7 @@ public class RedirController {
 		return redirRuleRepo.findRuleByNasid(nasid, new PageRequest(page, size, Direction.DESC, "id"));
 	}
 	
-	@RequiresPermissions("redir:view")
+	@RequiresPermissions("redirrule:view")
 	@RequestMapping(value="/redirrule/devtype/{devtype}",method=RequestMethod.GET)
 	public Page<RedirRule> findRedirRuleByDevtype(@PathVariable("devtype")String devtype,
 			@RequestParam(value="page",required = false, defaultValue="0")int page,
@@ -191,7 +191,7 @@ public class RedirController {
 		return redirRuleRepo.findRuleByDevtype(devtype, new PageRequest(page, size, Direction.DESC, "id"));
 	}
 	
-	@RequiresPermissions("redir:view")
+	@RequiresPermissions("redirrule:view")
 	@RequestMapping(value="/redirrule/os/{os}",method=RequestMethod.GET)
 	public Page<RedirRule> findRedirRuleByOs(@PathVariable("os")String os,
 			@RequestParam(value="page",required = false, defaultValue="0")int page,

@@ -113,11 +113,11 @@ public class UserController {
 	}
 	
 	@RequiresPermissions("user:view")
-	@RequestMapping(value="/account/{account}",method=RequestMethod.GET)
-	public Page<User> findUsersByAccount(@PathVariable("account")String account,
+	@RequestMapping(value="/fullname/{fullname}",method=RequestMethod.GET)
+	public Page<User> findUsersByFullname(@PathVariable("fullname")String fullname,
 			@RequestParam("page")int page, @RequestParam("size") int size){
 		Pageable pageable = new PageRequest(page, size, Direction.DESC, "id");
-		return userRepository.findByUsername(account,pageable);
+		return userRepository.findByFullname (fullname,pageable);
 	}
 	
 	@RequiresPermissions("user:view")
@@ -125,7 +125,7 @@ public class UserController {
 	public Page<User> findUsersByUsername(@PathVariable("username")String username,
 			@RequestParam("page")int page, @RequestParam("size") int size){
 		Pageable pageable = new PageRequest(page, size, Direction.DESC, "id");
-		return userRepository.findByFullname(username,pageable);
+		return userRepository.findByUsername(username,pageable);
 	}
 	
 	//for aop
