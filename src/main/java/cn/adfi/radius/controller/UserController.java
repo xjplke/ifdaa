@@ -1,6 +1,7 @@
 package cn.adfi.radius.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,8 +25,11 @@ import org.springframework.web.bind.annotation.RestController;
 import cn.adfi.radius.controller.helper.UserControllerHelper;
 import cn.adfi.radius.model.User;
 import cn.adfi.radius.repo.UserRepository;
+import cn.adfi.radius.sms.SMS;
+import cn.adfi.radius.sms.SMSFactory;
 import cn.adfi.radius.util.exceptions.UserNotFoundException;
 import cn.adfi.radius.util.exceptions.UserPasswordErrorException;
+import cn.adfi.radius.utils.RadomPassword;
 
 
 @EnableTransactionManagement
@@ -41,6 +46,9 @@ public class UserController {
 	
 	@Autowired
 	UserControllerHelper userControllerHelper;
+	
+	@Autowired
+	RadomPassword radomPassword;
 	
 	@RequiresPermissions("user:edit")
 	@RequestMapping(method=RequestMethod.POST)
@@ -190,5 +198,32 @@ public class UserController {
 		//modify to new password;
 		userChangePassword(find,newpassword);
 		userRepository.save(find);
+	}
+	
+	@RequestMapping(value="/register",method=RequestMethod.GET)
+	public String userRegist(@RequestParam("phonenum")String username){
+		User user;
+		SMS sms = SMSFactory.getSMS();
+		List<User> lst = userRepository.findByUsername(username); 
+		if(lst == null || lst.size() == 0){
+			user = new User();
+			user.setUsername(username);
+			user.setCreatedDate(new Date());
+			user.setLastAccessed(new Date());
+			user.setFullname(username);
+		}else{
+			user = lst.get(0);
+			if(user.getIsActive()){
+				userDisable(user);
+			}
+			user.setLastAccessed(new Date());
+		}
+		user.setPassword(radomPassword.radPass());
+		userEnable(user);
+		if(null!=sms){
+			sms.sendmsg(username, "password is:"+user.getPassword());
+		}
+		userRepository.save(user);
+		return "success";
 	}
 }

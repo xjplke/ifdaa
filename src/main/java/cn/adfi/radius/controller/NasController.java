@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import cn.adfi.radius.model.Nas;
 import cn.adfi.radius.repo.NasRepository;
 import cn.adfi.radius.util.exceptions.NasNotFoundException;
+import cn.adfi.radius.utils.RadiusService;
 
 /**
  * @author shaojunwu  --sjw
@@ -44,12 +45,14 @@ public class NasController {
 	@RequiresPermissions("nas:edit")
 	@RequestMapping(method=RequestMethod.POST)
 	public @ResponseBody Nas addNas(@RequestBody Nas nas){
-		return nasRepository.save(nas);
+		nas = nasRepository.save(nas);
+		return nas;
 	}
 	
 	@RequiresPermissions("nas:view")
 	@RequestMapping(method=RequestMethod.GET)
-	public @ResponseBody Page<Nas> getNas(@RequestParam(value="page",required = false, defaultValue="0")int page,
+	public @ResponseBody Page<Nas> getNas(
+			@RequestParam(value="page",required = false, defaultValue="0")int page,
 			@RequestParam(value="size",required = false, defaultValue="10") int size) {
 		Pageable pageable = new PageRequest(page, size, Direction.DESC, "id");
 		return nasRepository.findAll(pageable);
@@ -92,7 +95,8 @@ public class NasController {
 	
 	@RequiresPermissions("nas:view")
 	@RequestMapping(value="/server/{key}",method=RequestMethod.GET)
-	public Page<Nas> findNasByServer(@RequestParam(value="page",required = false, defaultValue="0")int page,
+	public Page<Nas> findNasByServer(
+			@RequestParam(value="page",required = false, defaultValue="0")int page,
 			@RequestParam(value="size",required = false, defaultValue="10") int size,
 			@PathVariable("key") String server){
 		return nasRepository.findNasByServer(server, new PageRequest(page, size, Direction.DESC, "id"));
@@ -100,7 +104,8 @@ public class NasController {
 	
 	@RequiresPermissions("nas:view")
 	@RequestMapping(value="/type/{key}",method=RequestMethod.GET)
-	public Page<Nas> findNasByType(@RequestParam(value="page",required = false, defaultValue="0")int page,
+	public Page<Nas> findNasByType(
+			@RequestParam(value="page",required = false, defaultValue="0")int page,
 			@RequestParam(value="size",required = false, defaultValue="10") int size,
 			@PathVariable("key") String type){
 		return nasRepository.findNasByType(type, new PageRequest(page, size, Direction.DESC, "id"));
@@ -114,5 +119,14 @@ public class NasController {
 		return nasRepository.findNasByNasname(nasname, new PageRequest(page, size, Direction.DESC, "id"));
 	}
 	
+	@RequestMapping(value="/radius/restart",method=RequestMethod.GET)
+	public void restartRadius(){
+		RadiusService.restart();
+	}
+	
+	@RequestMapping(value="/radius/state",method=RequestMethod.GET)
+	public String radiusStatus(){
+		return RadiusService.state();
+	}
 	
 }

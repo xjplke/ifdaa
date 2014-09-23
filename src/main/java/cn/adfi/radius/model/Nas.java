@@ -13,7 +13,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name="nas")
 public class Nas implements Serializable {
-	private static final long serialVersionUID = 1L;
+	
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3041725898125025255L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

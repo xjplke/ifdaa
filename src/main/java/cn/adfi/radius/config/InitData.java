@@ -14,8 +14,11 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 
 import cn.adfi.radius.model.Manager;
 import cn.adfi.radius.model.Role;
+import cn.adfi.radius.repo.DBPropertiesRepository;
 import cn.adfi.radius.repo.ManagerRepository;
 import cn.adfi.radius.repo.RoleRepository;
+import cn.adfi.radius.sms.SMSFactory;
+import cn.adfi.radius.utils.DBProperties;
 
 
 @Configuration
@@ -94,4 +97,20 @@ public class InitData {
 		return admin;
 	}
 	
+	
+	@Bean
+	@Autowired
+	DBProperties dbProperties(DBPropertiesRepository dbpRepo){
+		DBProperties dbp = new DBProperties(dbpRepo);
+		
+		dbp.put("sms.smstype","");
+		//for SMSwhjxt
+		dbp.put("sms.whjxt.accountname", "");
+		dbp.put("sms.whjxt.accountpwd", "");
+		
+		dbp.storToDB();
+		
+		SMSFactory.init(dbp);
+		return dbp;
+	}
 }

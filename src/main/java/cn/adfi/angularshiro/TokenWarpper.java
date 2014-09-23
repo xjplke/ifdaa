@@ -22,6 +22,4 @@ public class TokenWarpper {
 	public void setToken(Token token) {
 		this.token = token;
 	}
-	
-
 }

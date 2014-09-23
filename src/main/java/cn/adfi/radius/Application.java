@@ -36,9 +36,8 @@ public class Application  extends WebMvcConfigurerAdapter implements EmbeddedSer
     
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-    	registry.addResourceHandler("/").addResourceLocations("/index.html");
+    	registry.addResourceHandler("/portal/**").addResourceLocations("classpath:/static/");
         registry.addResourceHandler("/**").addResourceLocations("/");
-        registry.addResourceHandler("/portal").addResourceLocations("/Users/shaojunwu/portal");
     }
     
 //    @Bean

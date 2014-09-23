@@ -63,7 +63,7 @@ public class User implements Serializable{
 	private String email;
 	
 	@Cascade(value = CascadeType.SAVE_UPDATE)
-	@ManyToMany(fetch = FetchType.LAZY) 
+	@ManyToMany(fetch = FetchType.EAGER) 
 	@JoinTable(name="tbl_user_roles",joinColumns={@JoinColumn(name="userId")},inverseJoinColumns={@JoinColumn(name="roleId")})
 	private Set<Role> roles = new HashSet<Role>();
 	

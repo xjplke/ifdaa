@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Bootstrap In Practice - Landing Page Example</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0" />
+	
+	<!-- Bootstrap -->
+	<link href="../bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- 
+	<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet" />
+	<link href="http://fonts.googleapis.com/css?family=Abel|Open+Sans:400,600" rel="stylesheet" />
+ -->
+ 	<script type="text/javascript" src="../jquery/dist/jquery.min.js"></script>  
+	<style>
+
+		/* http://css-tricks.com/perfect-full-page-background-image/ */
+		
+		html {
+			background: url(img/background.jpg) no-repeat center center fixed; 
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover;
+		}
+		
+		body {
+			padding-top: 20px;
+			font-size: 16px;
+			font-family: "Open Sans",serif;
+			background: transparent;
+		}
+
+		h1 {
+			font-family: "Abel", Arial, sans-serif;
+			font-weight: 400;
+			font-size: 40px;
+		}
+
+		/* Override B3 .panel adding a subtly transparent background */
+		.panel {
+			background-color: rgba(255, 255, 255, 0.7);
+		}
+
+		.margin-base-vertical {
+			margin: 40px 0;
+		}
+		
+		
+	</style>
+	<script type="text/javascript">
+		var SEND_MSG_WAIT = 10;
+		var timex=SEND_MSG_WAIT;
+		function msgCountDown(){
+			timex--;
+			if(timex>0){
+				$("#getpassword").text("获取验证码"+"("+timex+")");
+				$('#getpassword').attr('disabled',"true");
+				setTimeout(msgCountDown,1000);
+			}else{
+				$("#getpassword").text("获取验证码");
+				$('#getpassword').removeAttr("disabled");
+				$("#message").html("");
+			}
+		}
+		function register(){
+			timex=SEND_MSG_WAIT;
+			var phone = $("#username").val();
+			$.ajax({
+                type: "GET",
+                url: "/rest/user/register",
+                data: "phonenum="+phone,
+                success: function(msg){
+                	setTimeout(msgCountDown,1);
+                	$("#message").html("<span color=red>发送成功，请稍后查看短信!!</span>");
+                },
+                error:function(error){
+                	$("#message").html("<span color=red>发送失败!!</span>");
+                }
+             });
+		}
+		
+		function login(){
+			$("#loginForm").attr("action","xxxx");
+			$("#loginForm").submit();
+		}
+		
+		$(function(){
+			$("#getpassword").click(register);
+			$("#login").click(login);
+		});
+	</script>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3 panel panel-default">
+
+				<p class="margin-base-vertical">欢迎使用</p>
+
+				<form id="loginForm" class="margin-base-vertical">
+					<p class="input-group">
+						<input id="username" type="text" class="form-control input-lg" name="username" placeholder="手机号" />
+						<a id="getpassword" class="input-group-addon btn btn-primary" href="javascript:void(0);">获取验证码</a>
+					</p>
+					<p class="input-group">
+						<input id="password" type="password" class="form-control input-lg" name="password" placeholder="验证码" />
+						<a id="login" class="input-group-addon btn btn-primary" href="javascript:void(0);">登&nbsp;&nbsp;录</a>
+					</p>
+					<p id="message"></p>
+				</form>
+
+				<div class="margin-base-vertical">
+					<small class="text-muted"></small>
+				</div>
+
+			</div><!-- //main content -->
+		</div><!-- //row -->
+	</div> <!-- //container -->
+	<div hight=100px>
+	</div>
+	
+</body>
+</html>
+
