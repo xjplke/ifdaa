@@ -1,7 +1,7 @@
 {
   "name": "angular-shiro",
   "description": "AngularShiro - AngularJS authentication and authorization support",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "keywords": [
     "angular",
     "shiro",
@@ -50,11 +50,11 @@
     "angular-mocks": "~1.2.6",
     "jquery": "~2.1.1"
   },
-  "_release": "0.1.0",
+  "_release": "0.1.1",
   "_resolution": {
     "type": "version",
-    "tag": "v0.1.0",
-    "commit": "7e30e94acd45a6e5a0a5ef73f19a48b66a45077f"
+    "tag": "v0.1.1",
+    "commit": "fa3354e875577be42ae09067f7b6d68479bc89de"
   },
   "_source": "git://github.com/gnavarro77/angular-shiro.git",
   "_target": "*",

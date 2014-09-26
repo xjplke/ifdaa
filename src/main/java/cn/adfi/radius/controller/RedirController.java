@@ -35,7 +35,7 @@ import eu.bitwalker.useragentutils.UserAgent;
 @RestController
 @EnableAutoConfiguration
 @Transactional
-@RequestMapping("/rest")
+@RequestMapping("/aaa")
 public class RedirController {
 	@Autowired
 	TerminalRepository terminalRepo;//write terminal when do redirect

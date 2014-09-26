@@ -35,7 +35,7 @@ import cn.adfi.radius.utils.RadomPassword;
 @EnableTransactionManagement
 @RestController
 @EnableAutoConfiguration
-@RequestMapping("/rest/user")
+@RequestMapping("/aaa/user")
 @Transactional
 public class UserController {
 	

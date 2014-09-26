@@ -14,7 +14,7 @@ import cn.adfi.radius.config.PermissionDetect.Resource;
 
 @RestController
 @EnableAutoConfiguration
-@RequestMapping("/rest/resoureactions")
+@RequestMapping("/aaa/resoureactions")
 public class PermissionDetectController {
 	@Autowired
 	PermissionDetect permissionDetect;

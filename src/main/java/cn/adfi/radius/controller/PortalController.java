@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @EnableTransactionManagement
 @RestController
 @EnableAutoConfiguration
-@RequestMapping("/rest/portal")
+@RequestMapping("/aaa/portal")
 @Transactional
 public class PortalController {
 	void portalLogin(){

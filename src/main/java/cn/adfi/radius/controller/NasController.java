@@ -34,7 +34,7 @@ import cn.adfi.radius.utils.RadiusService;
 @EnableTransactionManagement
 @RestController
 @EnableAutoConfiguration
-@RequestMapping("/rest/nas")
+@RequestMapping("/aaa/nas")
 @Transactional
 public class NasController {
 	Sort sort = new Sort(new Order(Direction.DESC,"id"));

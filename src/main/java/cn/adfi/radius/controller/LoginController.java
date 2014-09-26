@@ -28,7 +28,7 @@ import cn.adfi.radius.repo.UserRepository;
 
 
 @RestController
-@RequestMapping("/rest")
+@RequestMapping("/aaa")
 public class LoginController {
 	@Autowired
 	UserRepository userRepo;

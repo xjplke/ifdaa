@@ -28,7 +28,7 @@ import cn.adfi.radius.repo.RadacctRepository;
 @EnableTransactionManagement
 @RestController
 @EnableAutoConfiguration
-@RequestMapping("/rest/record")
+@RequestMapping("/aaa/record")
 public class RadacctController {
 	@Autowired
 	RadacctRepository radacctRepository;

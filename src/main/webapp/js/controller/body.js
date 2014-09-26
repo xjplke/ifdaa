@@ -12,14 +12,14 @@ function BodyController($scope,subject,$location,usernamePasswordToken,localStor
 		subject.login($scope.token).then(function() {
 			$scope.errauthc = false;
 			$location.path('/');
-			localStorageService.bind($scope,"token",$scope.tmp);
+			localStorageService.bind($scope,"tokenx",$scope.tmp);
 		}, function(data) {
 			$scope.errauthc = true;
 		});
 	}
 	
 	$scope.logout = function() {
-		localStorageService.remove("token");
+		localStorageService.remove("tokenx");
 		subject.logout();
 		$location.path('/');
 	}

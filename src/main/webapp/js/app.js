@@ -121,7 +121,7 @@ adfiApp.config(['$routeProvider','$httpProvider','RestangularProvider','angularS
     	});
     	
     	
-    	RestangularProvider.setBaseUrl("/rest");
+    	RestangularProvider.setBaseUrl("/aaa");
     	//config RestangularProvider
     	RestangularProvider.addResponseInterceptor(function(data, operation, what, url, response, deferred) {
 			var extractedData;
@@ -136,14 +136,14 @@ adfiApp.config(['$routeProvider','$httpProvider','RestangularProvider','angularS
 		});
     	
     	//angularShiroConfigProvider.options.urls['/**/*'] = 'authc';
-    	angularShiroConfigProvider.options.login.uri = '/rest/authenticate';
-    	angularShiroConfigProvider.options.logout.uri = '/rest/logout';
+    	angularShiroConfigProvider.options.login.uri = '/aaa/authenticate';
+    	angularShiroConfigProvider.options.logout.uri = '/aaa/logout';
   	}]);
 
 
 adfiApp.run(["localStorageService","subject","usernamePasswordToken","$location","$rootScope",
              function(localStorageService,subject,usernamePasswordToken,$location,$rootScope){
-	var token = localStorageService.get("token");
+	var token = localStorageService.get("tokenx");/*it must be tokenx!*/
 	$rootScope.global = {};
 	if(token!=null){
 		usernamePasswordToken.username = token.username;
