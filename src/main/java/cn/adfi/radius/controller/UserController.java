@@ -20,13 +20,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.adfi.radius.controller.helper.UserControllerHelper;
 import cn.adfi.radius.model.User;
 import cn.adfi.radius.repo.UserRepository;
 import cn.adfi.radius.sms.SMS;
-import cn.adfi.radius.sms.SMSFactory;
+import cn.adfi.radius.sms.SMSResoult;
 import cn.adfi.radius.util.exceptions.UserNotFoundException;
 import cn.adfi.radius.util.exceptions.UserPasswordErrorException;
 import cn.adfi.radius.utils.RadomPassword;
@@ -112,7 +113,7 @@ public class UserController {
 		userRepository.delete(id);
 	}
 	
-	@RequiresPermissions("user:view")
+	//@RequiresPermissions("user:view")
 	@RequestMapping(method=RequestMethod.GET)
 	public Page<User> getUsers(@RequestParam("page")int page,
 					@RequestParam("size") int size){
@@ -201,9 +202,9 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/register",method=RequestMethod.GET)
-	public String userRegist(@RequestParam("phonenum")String username){
+	public @ResponseBody SMSResoult userRegist(@RequestParam("phone")String username){
+		
 		User user;
-		SMS sms = SMSFactory.getSMS();
 		List<User> lst = userRepository.findByUsername(username); 
 		if(lst == null || lst.size() == 0){
 			user = new User();
@@ -220,10 +221,10 @@ public class UserController {
 		}
 		user.setPassword(radomPassword.radPass());
 		userEnable(user);
-		if(null!=sms){
-			sms.sendmsg(username, "password is:"+user.getPassword());
-		}
+		
 		userRepository.save(user);
-		return "success";
+		
+		SMSResoult rst = SMS.sendmsg(username, user.getPassword());	
+		return rst;
 	}
 }
