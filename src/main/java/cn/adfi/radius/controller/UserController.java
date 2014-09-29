@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import cn.adfi.radius.controller.helper.UserControllerHelper;
 import cn.adfi.radius.model.User;
 import cn.adfi.radius.repo.UserRepository;
+import cn.adfi.radius.sms.RegisterRsoult;
 import cn.adfi.radius.sms.SMS;
 import cn.adfi.radius.sms.SMSResoult;
 import cn.adfi.radius.util.exceptions.UserNotFoundException;
@@ -202,7 +203,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/register",method=RequestMethod.GET)
-	public @ResponseBody SMSResoult userRegist(@RequestParam("phone")String username){
+	public @ResponseBody RegisterRsoult userRegist(@RequestParam("phone")String username){
 		
 		User user;
 		List<User> lst = userRepository.findByUsername(username); 
@@ -225,6 +226,12 @@ public class UserController {
 		userRepository.save(user);
 		
 		SMSResoult rst = SMS.sendmsg(username, user.getPassword());	
-		return rst;
+		
+		RegisterRsoult resoult = new RegisterRsoult();
+		resoult.setSmsResoult(rst);
+		if(!rst.getStatus().equals("success")){
+			resoult.setUser(user);
+		}
+		return resoult;
 	}
 }

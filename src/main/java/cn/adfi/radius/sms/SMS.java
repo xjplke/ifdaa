@@ -1,5 +1,7 @@
 package cn.adfi.radius.sms;
 
+import java.net.ConnectException;
+
 import org.springframework.web.client.RestTemplate;
 
 public class SMS {
@@ -9,10 +11,15 @@ public class SMS {
 	public static SMSResoult sendmsg(String phone, String password) {
 		String url = BaseURL +"?"+"phone="+phone+"&"+"password="+password;
 		
-		SMSResoult  rst = new SMSResoult();
-		SMSResoult  rstx = restTemplate.getForObject(url, SMSResoult.class);//reply proxy object which can't serilize to json
-		rst.setStatus(rstx.getStatus());
-		rst.setMsg(rstx.getMsg());
+		SMSResoult  rst;
+		try{
+			rst = restTemplate.getForObject(url, SMSResoult.class);//reply proxy object which can't serilize to json
+		}catch(Exception e){
+			System.out.println(e);
+			rst = new SMSResoult();
+			rst.setStatus("failed");
+			rst.setMsg("SMS adapter rest call failed!");
+		}
 		return rst;
 	}
 }
