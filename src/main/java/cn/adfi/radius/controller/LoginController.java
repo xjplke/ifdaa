@@ -1,6 +1,9 @@
 package cn.adfi.radius.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.shiro.SecurityUtils;
@@ -24,6 +27,7 @@ import cn.adfi.angularshiro.AngularShiroPrincipal;
 import cn.adfi.angularshiro.TokenWarpper;
 import cn.adfi.radius.model.User;
 import cn.adfi.radius.repo.UserRepository;
+import cn.adfi.radius.util.exceptions.LicenseExpiredException;
 
 
 
@@ -74,6 +78,12 @@ public class LoginController {
 	
 	@RequestMapping(value="authenticate",method=RequestMethod.POST)
 	public AngularShiroLoginResponse shiroLogin(@RequestBody TokenWarpper tokenWarpper) throws Exception{
+		
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		if(new Date().after(df.parse("2015-01-01"))){
+			throw new LicenseExpiredException("License Expired!");
+		}
+		
 		Subject subject = SecurityUtils.getSubject();
 		subject.login(new UsernamePasswordToken(tokenWarpper.getToken().getPrincipal(),
 						tokenWarpper.getToken().getCredentials()));
@@ -87,9 +97,6 @@ public class LoginController {
 		}else{
 			throw new Exception("Username or Password error!");
 		}
-		
-		
-		
 		
 		AngularShiroAuthc authc = new AngularShiroAuthc();
 		AngularShiroPrincipal principal = new AngularShiroPrincipal();
