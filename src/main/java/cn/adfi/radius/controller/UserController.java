@@ -12,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
-import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +28,7 @@ import cn.adfi.radius.repo.UserRepository;
 import cn.adfi.radius.sms.RegisterRsoult;
 import cn.adfi.radius.sms.SMS;
 import cn.adfi.radius.sms.SMSResoult;
+import cn.adfi.radius.util.exceptions.LicenseExpiredException;
 import cn.adfi.radius.util.exceptions.UserNotFoundException;
 import cn.adfi.radius.util.exceptions.UserPasswordErrorException;
 import cn.adfi.radius.utils.RadomPassword;
@@ -203,7 +203,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/register",method=RequestMethod.GET)
-	public @ResponseBody RegisterRsoult userRegist(@RequestParam("phone")String username){
+	public @ResponseBody RegisterRsoult userRegist(@RequestParam("phone")String username) throws LicenseExpiredException{
 		
 		User user;
 		List<User> lst = userRepository.findByUsername(username); 
