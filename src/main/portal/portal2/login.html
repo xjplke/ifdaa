@@ -68,21 +68,32 @@
 			var phone = $("#username").val();
 			$.ajax({
                 type: "GET",
-                url: "/rest/user/register",
+                url: "/aaa/user/register",
                 data: "phone="+phone,
                 success: function(msg){
                 	setTimeout(msgCountDown,1);
-                	$("#message").html("<span color=red>发送成功，请稍后查看短信!!</span>");
+                	$("#message").html("<font color=red>发送成功，请稍后查看短信!!</font>");
                 },
                 error:function(error){
-                	$("#message").html("<span color=red>发送失败!!</span>");
+			$("#message").html("<font color=red>"+error.statusText+":"+error.responseText+"</font>");
                 }
              });
 		}
 		
 		function login(){
-			$("#loginForm").attr("action","xxxx");
-			$("#loginForm").submit();
+			$("#login").attr("disabled", true);	
+			$.ajax({
+				type:"POST",
+				url:"/protocal/login",
+				data:$("#loginForm").serialize(),
+				success:function(msg){
+					$(window.location).attr('href', 'success.html');		
+				},
+				error:function(error){
+					$("#login").attr("disabled", false);	
+			                $("#message").html("<font color=red>"+error.statusText+":"+error.responseText+"</font>");
+				}
+			});	
 		}
 		
 		$(function(){
