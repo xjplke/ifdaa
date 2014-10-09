@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Bootstrap In Practice - Landing Page Example</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0" />
+	
+	<!-- Bootstrap -->
+	<link href="../bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- 
+	<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet" />
+	<link href="http://fonts.googleapis.com/css?family=Abel|Open+Sans:400,600" rel="stylesheet" />
+ -->
+ 	<script type="text/javascript" src="../jquery/dist/jquery.min.js"></script>  
+	<style>
+
+		/* http://css-tricks.com/perfect-full-page-background-image/ */
+		
+		html {
+			background: url(img/background.jpg) no-repeat center center fixed; 
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover;
+		}
+		
+		body {
+			padding-top: 20px;
+			font-size: 16px;
+			font-family: "Open Sans",serif;
+			background: transparent;
+		}
+
+		h1 {
+			font-family: "Abel", Arial, sans-serif;
+			font-weight: 400;
+			font-size: 40px;
+		}
+
+		/* Override B3 .panel adding a subtly transparent background */
+		.panel {
+			background-color: rgba(255, 255, 255, 0.7);
+		}
+
+		.margin-base-vertical {
+			margin: 40px 0;
+		}
+		
+		
+	</style>
+	<script type="text/javascript">
+function KeyDown()
+{
+    if ((event.keyCode == 114)||
+    	(event.keyCode == 116)||			//屏蔽 F5 刷新键
+    	(event.keyCode == 122)) 			//屏蔽 F12 刷新键
+       {
+     	event.keyCode=0;
+     	event.returnValue=false;
+       }
+	if ((window.event.altKey)&& ((window.event.keyCode==37)||(window.event.keyCode==39))) // 屏蔽 Alt + -> 和 Alt+ <-
+	{
+		event.returnValue=false;
+	}
+
+	if (window.event.ctrlKey ||(event.shiftKey)&&(event.keyCode==121)) //屏蔽 Ctrl 键 和 shift+F10
+	{
+		event.returnValue=false;
+	}
+}
+
+		var timer1=0;
+		var statu=0;
+		var onlinetime=0;
+		function dytime()
+		{		
+			hh = parseInt(onlinetime/3600);
+			mm = parseInt((onlinetime-3600*hh)/60);
+			ss = parseInt(onlinetime%60);
+			if(mm<10)
+				hh="0"+hh;
+	
+			if(mm<10)
+				mm="0"+mm;
+	
+			if(ss<10)
+				ss="0"+ss;
+	
+			document.getElementById("ptime").innerHTML="在线时长：<font color=#ff0000>"+hh+"</font>:"+"<font color=#ff0000>"+mm+"</font>:"+"<font color=#ff0000>"+ss+"</font>";
+			onlinetime ++;
+			setTimeout(dytime,1000);		
+		}
+	
+		function logoff(){
+			$.ajax({
+				type: "GET",
+				url: "/protocal/logout",
+				data: $("#loginForm").serialize(),
+				success: function(msg){
+					$(window.location).attr('href', 'login.html');
+				},
+				error:function(error){
+					$("#message").html("<span color=red>"+error.responseText+";"+error.statusText+"</span>");	
+				}	
+			});	
+			
+			//$("#loginForm").attr("action","/protocal/login");
+			//$("#loginForm").submit();
+		}
+		
+		$(function(){
+			dytime();	
+		});
+	</script>
+</head>
+<body onKeyDown="KeyDown()">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3 panel panel-default">
+			
+		  <!--welcome page   loginsuccess   statusPage-->
+	  			<div class="m_l" id="loginsuccess" >
+         			<div class="loginpage">
+           				<p class="a1"><font class="red">登录成功，请不要关闭本页面！</font></p>
+           				<div class="loginku">            
+          	 				<p id=ptime align="center" style=></p>
+          					<br/>
+           				<p>如果下线，请点击下线按钮</p>
+           				<p class="a3"><a class="btn btn-primary" href="#" onclick="logoff();">下线</a></p>
+          			</div><!--loginku-->
+			</div>	
+			<p id="message"></p>
+
+			<div class="margin-base-vertical">
+				<small class="text-muted"></small>
+			</div>
+
+			</div><!-- //main content -->
+		</div><!-- //row -->
+	</div> <!-- //container -->
+	<div hight=100px>
+	</div>
+	
+</body>
+</html>
+
