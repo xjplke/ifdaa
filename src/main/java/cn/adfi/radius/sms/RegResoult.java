@@ -3,7 +3,7 @@ package cn.adfi.radius.sms;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class SMSResoult {
+public class RegResoult {
 	@JsonProperty("Status")
 	private String status;
 	

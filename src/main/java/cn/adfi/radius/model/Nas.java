@@ -39,7 +39,7 @@ public class Nas implements Serializable {
 	@Column(nullable=false, length=60)
 	private String secret;
 
-	@Column(nullable=false,length=64)
+	@Column(length=64)
 	private String server;
 
 	@Column(length=32)

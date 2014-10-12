@@ -27,7 +27,7 @@ import cn.adfi.radius.model.User;
 import cn.adfi.radius.repo.UserRepository;
 import cn.adfi.radius.sms.RegisterRsoult;
 import cn.adfi.radius.sms.SMS;
-import cn.adfi.radius.sms.SMSResoult;
+import cn.adfi.radius.sms.RegResoult;
 import cn.adfi.radius.util.exceptions.LicenseExpiredException;
 import cn.adfi.radius.util.exceptions.UserNotFoundException;
 import cn.adfi.radius.util.exceptions.UserPasswordErrorException;
@@ -202,8 +202,8 @@ public class UserController {
 		userRepository.save(find);
 	}
 	
-	@RequestMapping(value="/register",method=RequestMethod.GET)
-	public @ResponseBody RegisterRsoult userRegist(@RequestParam("phone")String username) throws LicenseExpiredException{
+	
+	private User registerUser(String username){
 		
 		User user;
 		List<User> lst = userRepository.findByUsername(username); 
@@ -224,14 +224,32 @@ public class UserController {
 		userEnable(user);
 		
 		userRepository.save(user);
+		return user;
+	}
+	
+	@RequestMapping(value="/smsregister",method=RequestMethod.GET)
+	public @ResponseBody RegisterRsoult smsRegister(@RequestParam("phone")String username) throws LicenseExpiredException{
 		
-		SMSResoult rst = SMS.sendmsg(username, user.getPassword());	
+		User user = registerUser(username);
+		
+		RegResoult rst = SMS.sendmsg(username, user.getPassword());	
 		
 		RegisterRsoult resoult = new RegisterRsoult();
-		resoult.setSmsResoult(rst);
+		resoult.setStatus(rst.getStatus());
+		resoult.setMsg(rst.getMsg());
 		if(!rst.getStatus().equals("success")){
 			resoult.setUser(user);
 		}
+		return resoult;
+	}
+	
+	@RequestMapping(value="/wxregister",method=RequestMethod.GET)
+	public @ResponseBody RegisterRsoult wxRegister(@RequestParam("fromusername")String fromusername) throws LicenseExpiredException{
+		User user = registerUser(fromusername);
+		RegisterRsoult resoult = new RegisterRsoult();
+		resoult.setMsg("");
+		resoult.setStatus("success");
+		resoult.setUser(user);
 		return resoult;
 	}
 }

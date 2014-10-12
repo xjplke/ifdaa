@@ -50,7 +50,7 @@ public class User implements Serializable{
 	@GeneratedValue
 	private Long id;
 
-	@Column(unique = true, length = 64, nullable = false)
+	@Column(unique = true, length = 128, nullable = false)
 	private String username;
 	
 	@Column(length=32)
