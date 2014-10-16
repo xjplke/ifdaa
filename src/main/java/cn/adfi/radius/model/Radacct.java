@@ -12,9 +12,15 @@ import java.util.Date;
  */
 @Entity
 @Table(name="radacct",indexes = {
-	@Index(columnList = "acctsessionid",name="acctsessionid")
+	@Index(columnList = "username",name="username"),
+	@Index(columnList = "framedipaddress",name="framedipaddress"),
+	@Index(columnList = "acctsessionid",name="acctsessionid"),
+	@Index(columnList = "acctsessiontime",name="acctsessiontime"),
+	@Index(columnList = "acctuniqueid",name="acctuniqueid"),
+	@Index(columnList = "acctstarttime",name="acctstarttime"),
+	@Index(columnList = "acctstoptime",name="acctstoptime"),
+	@Index(columnList = "nasipaddress",name="nasipaddress")
 })
-
 public class Radacct implements Serializable {
 	private static final long serialVersionUID = 1L;
 

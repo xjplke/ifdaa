@@ -114,7 +114,7 @@ public class UserController {
 		userRepository.delete(id);
 	}
 	
-	//@RequiresPermissions("user:view")
+	@RequiresPermissions("user:view")
 	@RequestMapping(method=RequestMethod.GET)
 	public Page<User> getUsers(@RequestParam("page")int page,
 					@RequestParam("size") int size){

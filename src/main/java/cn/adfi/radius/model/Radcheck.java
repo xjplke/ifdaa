@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.Table;
 
 /**
@@ -17,7 +18,9 @@ import javax.persistence.Table;
  * @date 2014-5-5
  */
 @Entity
-@Table(name="radcheck")
+@Table(name="radcheck",indexes = {
+		@Index(columnList = "username",name="username")
+})
 public class Radcheck implements Serializable{
 	/**
 	 * 

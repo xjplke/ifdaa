@@ -6,10 +6,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="radreply")
+@Table(name="radreply",indexes = {
+		@Index(columnList = "username",name="username")
+})
 public class Radreply implements Serializable {
 
 	/**
