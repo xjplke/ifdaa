@@ -80,7 +80,7 @@ public class LoginController {
 	public AngularShiroLoginResponse shiroLogin(@RequestBody TokenWarpper tokenWarpper) throws Exception{
 		
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		if(new Date().after(df.parse("2015-01-01"))){
+		if(new Date().after(df.parse("2015-04-01"))){
 			throw new LicenseExpiredException("License Expired!");
 		}
 		
